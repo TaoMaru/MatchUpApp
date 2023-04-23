@@ -84,11 +84,17 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub GetWords()
+        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"}
+        Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
+        'MatchUpApp\bin\Debug
+        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt")
+        MsgBox(currDir, vbOKOnly, "currdir")
+        MsgBox(filePath, vbOKOnly, "path")
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 
         Try
-            textReader = IO.File.OpenText("@targetWords.txt")
+            textReader = IO.File.OpenText(filePath)
             Do While textReader.Peek <> -1
                 _strWordList(intIndex) = textReader.ReadLine()
                 intIndex += 1
