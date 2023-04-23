@@ -28,6 +28,7 @@ Partial Class frmMatchUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 644)
         Me.Name = "frmMatchUp"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -129,5 +129,11 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bgPNGs\head-svgrepo-com.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bgPNGs\mind-map-svgrepo-com.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

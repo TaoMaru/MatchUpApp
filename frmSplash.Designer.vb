@@ -22,21 +22,15 @@ Partial Class frmSplash
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.lblCopyright = New System.Windows.Forms.Label()
         Me.lblVersion = New System.Windows.Forms.Label()
         Me.lblAuthor = New System.Windows.Forms.Label()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.picLogoMind = New System.Windows.Forms.PictureBox()
+        Me.picLogoHead = New System.Windows.Forms.PictureBox()
+        CType(Me.picLogoMind, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picLogoHead, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Location = New System.Drawing.Point(23, 32)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(237, 200)
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
         '
         'lblTitle
         '
@@ -75,6 +69,27 @@ Partial Class frmSplash
         Me.lblAuthor.TabIndex = 4
         Me.lblAuthor.Text = "Label1"
         '
+        'picLogoMind
+        '
+        Me.picLogoMind.BackColor = System.Drawing.Color.Black
+        Me.picLogoMind.Image = Global.MatchUpApp.My.Resources.Resources.mind_map_svgrepo_com
+        Me.picLogoMind.Location = New System.Drawing.Point(86, 55)
+        Me.picLogoMind.Name = "picLogoMind"
+        Me.picLogoMind.Size = New System.Drawing.Size(97, 80)
+        Me.picLogoMind.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.picLogoMind.TabIndex = 5
+        Me.picLogoMind.TabStop = False
+        '
+        'picLogoHead
+        '
+        Me.picLogoHead.Image = Global.MatchUpApp.My.Resources.Resources.head_svgrepo_com
+        Me.picLogoHead.Location = New System.Drawing.Point(23, 32)
+        Me.picLogoHead.Name = "picLogoHead"
+        Me.picLogoHead.Size = New System.Drawing.Size(237, 200)
+        Me.picLogoHead.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.picLogoHead.TabIndex = 0
+        Me.picLogoHead.TabStop = False
+        '
         'frmSplash
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -82,25 +97,28 @@ Partial Class frmSplash
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(498, 348)
         Me.ControlBox = False
+        Me.Controls.Add(Me.picLogoMind)
         Me.Controls.Add(Me.lblAuthor)
         Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.lblCopyright)
         Me.Controls.Add(Me.lblTitle)
-        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.picLogoHead)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmSplash"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLogoMind, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picLogoHead, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents picLogoHead As PictureBox
     Friend WithEvents lblTitle As Label
     Friend WithEvents lblCopyright As Label
     Friend WithEvents lblVersion As Label
     Friend WithEvents lblAuthor As Label
+    Friend WithEvents picLogoMind As PictureBox
 End Class
