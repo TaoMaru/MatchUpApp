@@ -24,31 +24,31 @@ Partial Class frmMatchUp
     Private Sub InitializeComponent()
         Me.lblHeading = New System.Windows.Forms.Label()
         Me.grpTaskSize = New System.Windows.Forms.GroupBox()
+        Me.rdoLong = New System.Windows.Forms.RadioButton()
+        Me.rdoShort = New System.Windows.Forms.RadioButton()
         Me.cboMode = New System.Windows.Forms.ComboBox()
         Me.lblInstructions = New System.Windows.Forms.Label()
-        Me.rdoShort = New System.Windows.Forms.RadioButton()
-        Me.rdoLong = New System.Windows.Forms.RadioButton()
         Me.grpIcons = New System.Windows.Forms.GroupBox()
-        Me.lblSampleWord = New System.Windows.Forms.Label()
-        Me.btnStart = New System.Windows.Forms.Button()
+        Me.picOption4 = New System.Windows.Forms.PictureBox()
         Me.btnExit = New System.Windows.Forms.Button()
+        Me.picOption3 = New System.Windows.Forms.PictureBox()
+        Me.btnStart = New System.Windows.Forms.Button()
+        Me.picOption2 = New System.Windows.Forms.PictureBox()
+        Me.picOption1 = New System.Windows.Forms.PictureBox()
+        Me.lblSampleWord = New System.Windows.Forms.Label()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.picCorrect = New System.Windows.Forms.PictureBox()
         Me.picMind = New System.Windows.Forms.PictureBox()
         Me.picHead = New System.Windows.Forms.PictureBox()
-        Me.picOption4 = New System.Windows.Forms.PictureBox()
-        Me.picOption3 = New System.Windows.Forms.PictureBox()
-        Me.picOption2 = New System.Windows.Forms.PictureBox()
-        Me.picOption1 = New System.Windows.Forms.PictureBox()
         Me.grpTaskSize.SuspendLayout()
         Me.grpIcons.SuspendLayout()
-        CType(Me.picCorrect, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picMind, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picHead, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picOption3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picOption2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picOption1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picCorrect, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picMind, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picHead, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblHeading
@@ -75,6 +75,30 @@ Partial Class frmMatchUp
         Me.grpTaskSize.TabStop = False
         Me.grpTaskSize.Text = "Choose a Task Size:"
         '
+        'rdoLong
+        '
+        Me.rdoLong.BackColor = System.Drawing.Color.Transparent
+        Me.rdoLong.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rdoLong.Location = New System.Drawing.Point(79, 80)
+        Me.rdoLong.Name = "rdoLong"
+        Me.rdoLong.Size = New System.Drawing.Size(184, 40)
+        Me.rdoLong.TabIndex = 1
+        Me.rdoLong.TabStop = True
+        Me.rdoLong.Text = "10 Words"
+        Me.rdoLong.UseVisualStyleBackColor = False
+        '
+        'rdoShort
+        '
+        Me.rdoShort.BackColor = System.Drawing.Color.Transparent
+        Me.rdoShort.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rdoShort.Location = New System.Drawing.Point(79, 34)
+        Me.rdoShort.Name = "rdoShort"
+        Me.rdoShort.Size = New System.Drawing.Size(184, 40)
+        Me.rdoShort.TabIndex = 0
+        Me.rdoShort.TabStop = True
+        Me.rdoShort.Text = "5 Words"
+        Me.rdoShort.UseVisualStyleBackColor = False
+        '
         'cboMode
         '
         Me.cboMode.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -97,44 +121,72 @@ Partial Class frmMatchUp
         Me.lblInstructions.Text = "Please choose a Match Up Mode to begin!"
         Me.lblInstructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'rdoShort
-        '
-        Me.rdoShort.BackColor = System.Drawing.Color.Transparent
-        Me.rdoShort.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rdoShort.Location = New System.Drawing.Point(79, 34)
-        Me.rdoShort.Name = "rdoShort"
-        Me.rdoShort.Size = New System.Drawing.Size(184, 40)
-        Me.rdoShort.TabIndex = 0
-        Me.rdoShort.TabStop = True
-        Me.rdoShort.Text = "5 Words"
-        Me.rdoShort.UseVisualStyleBackColor = False
-        '
-        'rdoLong
-        '
-        Me.rdoLong.BackColor = System.Drawing.Color.Transparent
-        Me.rdoLong.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rdoLong.Location = New System.Drawing.Point(79, 80)
-        Me.rdoLong.Name = "rdoLong"
-        Me.rdoLong.Size = New System.Drawing.Size(184, 40)
-        Me.rdoLong.TabIndex = 1
-        Me.rdoLong.TabStop = True
-        Me.rdoLong.Text = "10 Words"
-        Me.rdoLong.UseVisualStyleBackColor = False
-        '
         'grpIcons
         '
         Me.grpIcons.BackColor = System.Drawing.Color.Transparent
         Me.grpIcons.Controls.Add(Me.picOption4)
-        Me.grpIcons.Controls.Add(Me.btnExit)
         Me.grpIcons.Controls.Add(Me.picOption3)
-        Me.grpIcons.Controls.Add(Me.btnStart)
         Me.grpIcons.Controls.Add(Me.picOption2)
         Me.grpIcons.Controls.Add(Me.picOption1)
-        Me.grpIcons.Location = New System.Drawing.Point(24, 338)
+        Me.grpIcons.Location = New System.Drawing.Point(24, 315)
         Me.grpIcons.Name = "grpIcons"
         Me.grpIcons.Size = New System.Drawing.Size(1044, 294)
         Me.grpIcons.TabIndex = 6
         Me.grpIcons.TabStop = False
+        '
+        'picOption4
+        '
+        Me.picOption4.Location = New System.Drawing.Point(807, 80)
+        Me.picOption4.Name = "picOption4"
+        Me.picOption4.Size = New System.Drawing.Size(217, 153)
+        Me.picOption4.TabIndex = 3
+        Me.picOption4.TabStop = False
+        '
+        'btnExit
+        '
+        Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExit.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExit.Location = New System.Drawing.Point(634, 569)
+        Me.btnExit.Name = "btnExit"
+        Me.btnExit.Size = New System.Drawing.Size(152, 63)
+        Me.btnExit.TabIndex = 10
+        Me.btnExit.Text = "Exit"
+        Me.btnExit.UseVisualStyleBackColor = True
+        '
+        'picOption3
+        '
+        Me.picOption3.Location = New System.Drawing.Point(545, 80)
+        Me.picOption3.Name = "picOption3"
+        Me.picOption3.Size = New System.Drawing.Size(217, 153)
+        Me.picOption3.TabIndex = 2
+        Me.picOption3.TabStop = False
+        '
+        'btnStart
+        '
+        Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnStart.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnStart.Location = New System.Drawing.Point(255, 569)
+        Me.btnStart.Name = "btnStart"
+        Me.btnStart.Size = New System.Drawing.Size(152, 63)
+        Me.btnStart.TabIndex = 9
+        Me.btnStart.Text = "Start!"
+        Me.btnStart.UseVisualStyleBackColor = True
+        '
+        'picOption2
+        '
+        Me.picOption2.Location = New System.Drawing.Point(283, 80)
+        Me.picOption2.Name = "picOption2"
+        Me.picOption2.Size = New System.Drawing.Size(217, 153)
+        Me.picOption2.TabIndex = 1
+        Me.picOption2.TabStop = False
+        '
+        'picOption1
+        '
+        Me.picOption1.Location = New System.Drawing.Point(21, 80)
+        Me.picOption1.Name = "picOption1"
+        Me.picOption1.Size = New System.Drawing.Size(217, 153)
+        Me.picOption1.TabIndex = 0
+        Me.picOption1.TabStop = False
         '
         'lblSampleWord
         '
@@ -146,28 +198,6 @@ Partial Class frmMatchUp
         Me.lblSampleWord.TabIndex = 7
         Me.lblSampleWord.Text = "SAMPLE"
         Me.lblSampleWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'btnStart
-        '
-        Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnStart.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnStart.Location = New System.Drawing.Point(289, 196)
-        Me.btnStart.Name = "btnStart"
-        Me.btnStart.Size = New System.Drawing.Size(152, 63)
-        Me.btnStart.TabIndex = 9
-        Me.btnStart.Text = "Start!"
-        Me.btnStart.UseVisualStyleBackColor = True
-        '
-        'btnExit
-        '
-        Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExit.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExit.Location = New System.Drawing.Point(603, 196)
-        Me.btnExit.Name = "btnExit"
-        Me.btnExit.Size = New System.Drawing.Size(152, 63)
-        Me.btnExit.TabIndex = 10
-        Me.btnExit.Text = "Exit"
-        Me.btnExit.UseVisualStyleBackColor = True
         '
         'btnOK
         '
@@ -213,38 +243,6 @@ Partial Class frmMatchUp
         Me.picHead.TabIndex = 1
         Me.picHead.TabStop = False
         '
-        'picOption4
-        '
-        Me.picOption4.Location = New System.Drawing.Point(807, 80)
-        Me.picOption4.Name = "picOption4"
-        Me.picOption4.Size = New System.Drawing.Size(217, 153)
-        Me.picOption4.TabIndex = 3
-        Me.picOption4.TabStop = False
-        '
-        'picOption3
-        '
-        Me.picOption3.Location = New System.Drawing.Point(545, 80)
-        Me.picOption3.Name = "picOption3"
-        Me.picOption3.Size = New System.Drawing.Size(217, 153)
-        Me.picOption3.TabIndex = 2
-        Me.picOption3.TabStop = False
-        '
-        'picOption2
-        '
-        Me.picOption2.Location = New System.Drawing.Point(283, 80)
-        Me.picOption2.Name = "picOption2"
-        Me.picOption2.Size = New System.Drawing.Size(217, 153)
-        Me.picOption2.TabIndex = 1
-        Me.picOption2.TabStop = False
-        '
-        'picOption1
-        '
-        Me.picOption1.Location = New System.Drawing.Point(21, 80)
-        Me.picOption1.Name = "picOption1"
-        Me.picOption1.Size = New System.Drawing.Size(217, 153)
-        Me.picOption1.TabIndex = 0
-        Me.picOption1.TabStop = False
-        '
         'frmMatchUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -252,8 +250,10 @@ Partial Class frmMatchUp
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 644)
         Me.Controls.Add(Me.lblHeading)
+        Me.Controls.Add(Me.btnExit)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.picCorrect)
+        Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblSampleWord)
         Me.Controls.Add(Me.lblInstructions)
         Me.Controls.Add(Me.cboMode)
@@ -266,13 +266,13 @@ Partial Class frmMatchUp
         Me.Text = "Match Up!"
         Me.grpTaskSize.ResumeLayout(False)
         Me.grpIcons.ResumeLayout(False)
-        CType(Me.picCorrect, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picMind, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picHead, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picCorrect, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picMind, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picHead, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
