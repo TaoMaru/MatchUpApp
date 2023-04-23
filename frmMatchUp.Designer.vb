@@ -104,9 +104,9 @@ Partial Class frmMatchUp
         Me.cboMode.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboMode.FormattingEnabled = True
         Me.cboMode.Items.AddRange(New Object() {"Printed Word Match", "Spoken Word Match"})
-        Me.cboMode.Location = New System.Drawing.Point(428, 231)
+        Me.cboMode.Location = New System.Drawing.Point(361, 231)
         Me.cboMode.Name = "cboMode"
-        Me.cboMode.Size = New System.Drawing.Size(235, 41)
+        Me.cboMode.Size = New System.Drawing.Size(369, 41)
         Me.cboMode.TabIndex = 4
         Me.cboMode.Text = "Select Mode:"
         '
@@ -114,16 +114,16 @@ Partial Class frmMatchUp
         '
         Me.lblInstructions.BackColor = System.Drawing.Color.Transparent
         Me.lblInstructions.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInstructions.Location = New System.Drawing.Point(262, 161)
+        Me.lblInstructions.Location = New System.Drawing.Point(199, 161)
         Me.lblInstructions.Name = "lblInstructions"
-        Me.lblInstructions.Size = New System.Drawing.Size(566, 67)
+        Me.lblInstructions.Size = New System.Drawing.Size(693, 67)
         Me.lblInstructions.TabIndex = 5
         Me.lblInstructions.Text = "Please choose a Match Up Mode to begin!"
         Me.lblInstructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'grpIcons
         '
-        Me.grpIcons.BackColor = System.Drawing.Color.Transparent
+        Me.grpIcons.BackColor = System.Drawing.Color.LightGoldenrodYellow
         Me.grpIcons.Controls.Add(Me.picOption4)
         Me.grpIcons.Controls.Add(Me.picOption3)
         Me.grpIcons.Controls.Add(Me.picOption2)
@@ -144,14 +144,15 @@ Partial Class frmMatchUp
         '
         'btnExit
         '
+        Me.btnExit.BackColor = System.Drawing.Color.LightGoldenrodYellow
         Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExit.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExit.Location = New System.Drawing.Point(634, 569)
+        Me.btnExit.Location = New System.Drawing.Point(590, 585)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(152, 63)
         Me.btnExit.TabIndex = 10
         Me.btnExit.Text = "Exit"
-        Me.btnExit.UseVisualStyleBackColor = True
+        Me.btnExit.UseVisualStyleBackColor = False
         '
         'picOption3
         '
@@ -163,14 +164,15 @@ Partial Class frmMatchUp
         '
         'btnStart
         '
+        Me.btnStart.BackColor = System.Drawing.Color.LightGoldenrodYellow
         Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnStart.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnStart.Location = New System.Drawing.Point(255, 569)
+        Me.btnStart.Location = New System.Drawing.Point(349, 585)
         Me.btnStart.Name = "btnStart"
         Me.btnStart.Size = New System.Drawing.Size(152, 63)
         Me.btnStart.TabIndex = 9
         Me.btnStart.Text = "Start!"
-        Me.btnStart.UseVisualStyleBackColor = True
+        Me.btnStart.UseVisualStyleBackColor = False
         '
         'picOption2
         '
@@ -248,12 +250,12 @@ Partial Class frmMatchUp
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
-        Me.ClientSize = New System.Drawing.Size(1090, 644)
+        Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblHeading)
         Me.Controls.Add(Me.btnExit)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.picCorrect)
-        Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblSampleWord)
         Me.Controls.Add(Me.lblInstructions)
         Me.Controls.Add(Me.cboMode)

@@ -23,21 +23,24 @@ Public Class frmMatchUp
 
 
     Private Sub ResetForm()
+        'resets form to load state: hide btns and containers that are used in match tasks
         btnOK.Visible = False
         grpIcons.Visible = False
         picCorrect.Visible = False
         btnStart.Enabled = False
         lblSampleWord.Visible = False
         grpTaskSize.Visible = False
-        ShowLogo()
+        ShowLogo() 'show the app logo
     End Sub
 
     Private Sub HideLogo()
+        'hides the 2 pic Boxes that comprise the logo
         picHead.Visible = False
         picMind.Visible = False
     End Sub
 
     Private Sub ShowLogo()
+        'shows the 2 pic Boxes that comprises the logo
         picHead.Visible = True
         picMind.Visible = True
     End Sub
@@ -84,12 +87,13 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub GetWords()
-        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"}
+        'get the list of target words & populate _strWordList with contents
+        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
-        'MatchUpApp\bin\Debug
-        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt")
-        MsgBox(currDir, vbOKOnly, "currdir")
-        MsgBox(filePath, vbOKOnly, "path")
+        'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
+        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
+        'MsgBox(currDir, vbOKOnly, "currdir")
+        'MsgBox(filePath, vbOKOnly, "path")
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 
