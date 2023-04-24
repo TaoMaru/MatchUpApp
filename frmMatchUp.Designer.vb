@@ -30,11 +30,11 @@ Partial Class frmMatchUp
         Me.lblInstructions = New System.Windows.Forms.Label()
         Me.grpIcons = New System.Windows.Forms.GroupBox()
         Me.picOption4 = New System.Windows.Forms.PictureBox()
-        Me.btnExit = New System.Windows.Forms.Button()
         Me.picOption3 = New System.Windows.Forms.PictureBox()
-        Me.btnStart = New System.Windows.Forms.Button()
         Me.picOption2 = New System.Windows.Forms.PictureBox()
         Me.picOption1 = New System.Windows.Forms.PictureBox()
+        Me.btnExit = New System.Windows.Forms.Button()
+        Me.btnStart = New System.Windows.Forms.Button()
         Me.lblSampleWord = New System.Windows.Forms.Label()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.picCorrect = New System.Windows.Forms.PictureBox()
@@ -142,18 +142,6 @@ Partial Class frmMatchUp
         Me.picOption4.TabIndex = 3
         Me.picOption4.TabStop = False
         '
-        'btnExit
-        '
-        Me.btnExit.BackColor = System.Drawing.Color.LightGoldenrodYellow
-        Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExit.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExit.Location = New System.Drawing.Point(590, 585)
-        Me.btnExit.Name = "btnExit"
-        Me.btnExit.Size = New System.Drawing.Size(152, 63)
-        Me.btnExit.TabIndex = 10
-        Me.btnExit.Text = "Exit"
-        Me.btnExit.UseVisualStyleBackColor = False
-        '
         'picOption3
         '
         Me.picOption3.Location = New System.Drawing.Point(545, 80)
@@ -161,18 +149,6 @@ Partial Class frmMatchUp
         Me.picOption3.Size = New System.Drawing.Size(217, 153)
         Me.picOption3.TabIndex = 2
         Me.picOption3.TabStop = False
-        '
-        'btnStart
-        '
-        Me.btnStart.BackColor = System.Drawing.Color.LightGoldenrodYellow
-        Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnStart.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnStart.Location = New System.Drawing.Point(349, 585)
-        Me.btnStart.Name = "btnStart"
-        Me.btnStart.Size = New System.Drawing.Size(152, 63)
-        Me.btnStart.TabIndex = 9
-        Me.btnStart.Text = "Start!"
-        Me.btnStart.UseVisualStyleBackColor = False
         '
         'picOption2
         '
@@ -189,6 +165,30 @@ Partial Class frmMatchUp
         Me.picOption1.Size = New System.Drawing.Size(217, 153)
         Me.picOption1.TabIndex = 0
         Me.picOption1.TabStop = False
+        '
+        'btnExit
+        '
+        Me.btnExit.BackColor = System.Drawing.Color.LightGoldenrodYellow
+        Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExit.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExit.Location = New System.Drawing.Point(590, 585)
+        Me.btnExit.Name = "btnExit"
+        Me.btnExit.Size = New System.Drawing.Size(152, 63)
+        Me.btnExit.TabIndex = 10
+        Me.btnExit.Text = "Exit"
+        Me.btnExit.UseVisualStyleBackColor = False
+        '
+        'btnStart
+        '
+        Me.btnStart.BackColor = System.Drawing.Color.LightGoldenrodYellow
+        Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnStart.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnStart.Location = New System.Drawing.Point(349, 585)
+        Me.btnStart.Name = "btnStart"
+        Me.btnStart.Size = New System.Drawing.Size(152, 63)
+        Me.btnStart.TabIndex = 9
+        Me.btnStart.Text = "Start!"
+        Me.btnStart.UseVisualStyleBackColor = False
         '
         'lblSampleWord
         '

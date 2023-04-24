@@ -19,7 +19,11 @@ Public Class frmMatchUp
         GetWords()
     End Sub
 
-    Private _strWordList(10) As String
+    'program variables:
+    Private _strWordList(10) As String 'holds target words 
+    Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
+    Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
+    Private readyForNext As Boolean = False
 
 
     Private Sub ResetForm()
@@ -53,6 +57,7 @@ Public Class frmMatchUp
     Private Sub cboMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboMode.SelectedIndexChanged
         lblInstructions.Visible = False
         grpTaskSize.Visible = True
+        rdoShort.Checked = True
         btnStart.Enabled = True
     End Sub
 
@@ -70,9 +75,15 @@ Public Class frmMatchUp
         Dim intNumTasks As Integer = 5
         Dim intCurrTask As Integer
         'show word
-        For intCurrTask = 0 To (intNumTasks - 1)
-            ShowWord(intCurrTask)
-        Next
+        'For intCurrTask = 0 To (intNumTasks - 1)
+        'ShowWord(intCurrTask)
+        'Next
+        'determine game type:
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
+            PlayShortTask()
+        Else
+            'PlayLongTask()
+        End If
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
@@ -80,7 +91,10 @@ Public Class frmMatchUp
         'hides btnOk
         btnOK.Visible = False
         ShowIconOptions()
+        readyForNext = False
     End Sub
+
+    'Event btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
     Private Sub ShowIconOptions()
         grpIcons.Visible = True
@@ -109,8 +123,56 @@ Public Class frmMatchUp
         End Try
     End Sub
 
-    Private Sub ShowWord(ByVal taskNum As Integer)
-        lblSampleWord.Text = _strWordList(taskNum)
+    Private Sub ShowWord(ByVal taskNum As Integer, ByVal wordArray As String())
+        lblSampleWord.Text = wordArray(taskNum)
         lblSampleWord.Visible = True
+        MsgBox(wordArray(taskNum), vbOKOnly, "task word")
+    End Sub
+
+    Private Sub PlayShortTask()
+        'get 5 words from list
+        Dim strShortList As String() = GetShortList()
+        'Present word series:
+        Dim intCurrWordIndex As Integer = 0
+        readyForNext = True
+        Do While intCurrWordIndex <= (strShortList.Length() - 1)
+            ShowWord(intCurrWordIndex, strShortList)
+            btnOK.Visible = True
+            btnOK.Enabled = True
+            If readyForNext = True Then
+                intCurrWordIndex += 1
+            End If
+        Loop
+    End Sub
+
+    Private Function GetShortList() As String()
+        ' creates short word list from original list
+        Dim strShortWordList(4) As String
+        Dim intWordIndex As Integer
+        For intWordIndex = 0 To (strShortWordList.Length() - 1)
+            strShortWordList(intWordIndex) = _strWordList(intWordIndex)
+            MsgBox(strShortWordList(intWordIndex), vbOKOnly, "word")
+        Next
+        Return strShortWordList
+    End Function
+
+    Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
+        ' decides of is correct icon
+        readyForNext = True
+    End Sub
+
+    Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
+        ' decides of is correct icon
+        readyForNext = True
+    End Sub
+
+    Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
+        ' decides of is correct icon
+        readyForNext = True
+    End Sub
+
+    Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
+        ' decides of is correct icon
+        readyForNext = True
     End Sub
 End Class
