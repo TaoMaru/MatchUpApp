@@ -17,14 +17,36 @@ Public Class frmMatchUp
         MinimizeBox = False
         ResetForm()
         GetWords()
+        CreateIconsList()
     End Sub
 
     'program variables:
-    Private _strWordList(10) As String 'holds target words 
+    Private _strWordList(9) As String 'holds target words 
     Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
     Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
     Private readyForNext As Boolean = False
 
+    'picture/icons:
+    Private _strIconsList(9) As String 'Holds icons
+    Private Sub CreateIconsList()
+        'populates icon file path lists by getting the current directory and combining file names
+        Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
+        Dim iconDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
+        _strIconsList(0) = IO.Path.Combine(iconDir, "samplePNGs\bike-sport-travel-svgrepo-com.png")
+        _strIconsList(1) = IO.Path.Combine(iconDir, "samplePNGs\book-closed-svgrepo-com.png")
+        _strIconsList(2) = IO.Path.Combine(iconDir, "samplePNGs\car-svgrepo-com.png")
+        _strIconsList(3) = IO.Path.Combine(iconDir, "samplePNGs\cat-5-svgrepo-com.png")
+        _strIconsList(4) = IO.Path.Combine(iconDir, "samplePNGs\clock-svgrepo-com.png")
+        _strIconsList(5) = IO.Path.Combine(iconDir, "samplePNGs\sitting-dog-svgrepo-com.png")
+        _strIconsList(6) = IO.Path.Combine(iconDir, "samplePNGs\fish-svgrepo-com.png")
+        _strIconsList(7) = IO.Path.Combine(iconDir, "samplePNGs\house-svgrepo-com.png")
+        _strIconsList(8) = IO.Path.Combine(iconDir, "samplePNGs\phone-svgrepo-com.png")
+        _strIconsList(9) = IO.Path.Combine(iconDir, "samplePNGs\tree-svgrepo-com.png")
+        Dim intIconIndex As Integer
+        'For intIconIndex = 0 To (_strIconsList.Length() - 1)
+        'MsgBox(_strIconsList(intIconIndex), vbOKOnly, "icon path")
+        'Next
+    End Sub
 
     Private Sub ResetForm()
         'resets form to load state: hide btns and containers that are used in match tasks
@@ -139,9 +161,7 @@ Public Class frmMatchUp
             ShowWord(intCurrWordIndex, strShortList)
             btnOK.Visible = True
             btnOK.Enabled = True
-            If readyForNext = True Then
-                intCurrWordIndex += 1
-            End If
+            intCurrWordIndex += 1
         Loop
     End Sub
 
