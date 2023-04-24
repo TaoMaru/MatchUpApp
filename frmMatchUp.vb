@@ -185,31 +185,32 @@ Public Class frmMatchUp
         Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
         Dim intI As Integer = intCurrSample
         picOption1.BackgroundImage = currSampleImage
-        picOption1.SizeMode = PictureBoxSizeMode.StretchImage
+        'MsgBox(_strIconsList(intCurrSample), vbOKOnly, "option 1")
         If (intI + 1) < _strIconsList.Length() Then
             picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
-            picOption2.SizeMode = PictureBoxSizeMode.StretchImage
+            'MsgBox(_strIconsList(intI + 1), vbOKOnly, "option 2")
         Else
             intI = 0
             picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            picOption2.SizeMode = PictureBoxSizeMode.StretchImage
-            If (intI + 2) < _strIconsList.Length() Then
-                picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
-                picOption3.SizeMode = PictureBoxSizeMode.StretchImage
-            Else
-                intI = 0
-                picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
-                picOption3.SizeMode = PictureBoxSizeMode.StretchImage
-                If (intI + 3) < _strIconsList.Length() Then
-                    picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
-                    picOption4.SizeMode = PictureBoxSizeMode.StretchImage
-                Else
-                    intI = 0
-                    picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
-                    picOption4.SizeMode = PictureBoxSizeMode.StretchImage
-                End If
-            End If
+            'MsgBox(_strIconsList(intI), vbOKOnly, "option 2")
         End If
+        If (intI + 2) < _strIconsList.Length() Then
+            picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
+            'MsgBox(_strIconsList(intI + 2), vbOKOnly, "option 3")
+        Else
+            intI = 0
+            picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            'MsgBox(_strIconsList(intI), vbOKOnly, "option 3")
+        End If
+        If (intI + 3) < _strIconsList.Length() Then
+            picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
+            'MsgBox(_strIconsList(intI + 3), vbOKOnly, "option 4")
+        Else
+            intI = 0
+            picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            'MsgBox(_strIconsList(intI), vbOKOnly, "option 4")
+        End If
+
     End Sub
 
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click

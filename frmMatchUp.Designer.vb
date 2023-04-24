@@ -136,33 +136,41 @@ Partial Class frmMatchUp
         '
         'picOption4
         '
+        Me.picOption4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.picOption4.Location = New System.Drawing.Point(807, 80)
         Me.picOption4.Name = "picOption4"
         Me.picOption4.Size = New System.Drawing.Size(217, 153)
+        Me.picOption4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picOption4.TabIndex = 3
         Me.picOption4.TabStop = False
         '
         'picOption3
         '
+        Me.picOption3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.picOption3.Location = New System.Drawing.Point(545, 80)
         Me.picOption3.Name = "picOption3"
         Me.picOption3.Size = New System.Drawing.Size(217, 153)
+        Me.picOption3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picOption3.TabIndex = 2
         Me.picOption3.TabStop = False
         '
         'picOption2
         '
+        Me.picOption2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.picOption2.Location = New System.Drawing.Point(283, 80)
         Me.picOption2.Name = "picOption2"
         Me.picOption2.Size = New System.Drawing.Size(217, 153)
+        Me.picOption2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picOption2.TabIndex = 1
         Me.picOption2.TabStop = False
         '
         'picOption1
         '
+        Me.picOption1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.picOption1.Location = New System.Drawing.Point(21, 80)
         Me.picOption1.Name = "picOption1"
         Me.picOption1.Size = New System.Drawing.Size(217, 153)
+        Me.picOption1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.picOption1.TabIndex = 0
         Me.picOption1.TabStop = False
         '
@@ -268,6 +276,7 @@ Partial Class frmMatchUp
         Me.Text = "Match Up!"
         Me.grpTaskSize.ResumeLayout(False)
         Me.grpIcons.ResumeLayout(False)
+        Me.grpIcons.PerformLayout()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picOption2, System.ComponentModel.ISupportInitialize).EndInit()

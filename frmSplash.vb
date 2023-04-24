@@ -12,7 +12,7 @@
 
         'Application title
         If My.Application.Info.Title <> "" Then
-            lblTitle.Text = My.Application.Info.Title
+            lblTitle.Text = "Match Up!"
         Else
             'If the application title is missing, use the application name, without the extension
             lblTitle.Text = System.IO.Path.GetFileNameWithoutExtension(My.Application.Info.AssemblyName)
