@@ -120,6 +120,8 @@ Public Class frmMatchUp
 
     Private Sub ShowIconOptions()
         grpIcons.Visible = True
+        lblInstructions.Text = ""
+        lblInstructions.Visible = True
     End Sub
 
     Private Sub GetWords()
@@ -146,9 +148,10 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub ShowWord(ByVal taskNum As Integer, ByVal wordArray As String())
+        'shows next word in the task series
         lblSampleWord.Text = wordArray(taskNum)
         lblSampleWord.Visible = True
-        MsgBox(wordArray(taskNum), vbOKOnly, "task word")
+        ' MsgBox(wordArray(taskNum), vbOKOnly, "task word")
     End Sub
 
     Private Sub PlayShortTask()
@@ -159,6 +162,7 @@ Public Class frmMatchUp
         readyForNext = True
         Do While intCurrWordIndex <= (strShortList.Length() - 1)
             ShowWord(intCurrWordIndex, strShortList)
+            SetIconsToPicBoxes(intCurrWordIndex)
             btnOK.Visible = True
             btnOK.Enabled = True
             intCurrWordIndex += 1
@@ -171,28 +175,64 @@ Public Class frmMatchUp
         Dim intWordIndex As Integer
         For intWordIndex = 0 To (strShortWordList.Length() - 1)
             strShortWordList(intWordIndex) = _strWordList(intWordIndex)
-            MsgBox(strShortWordList(intWordIndex), vbOKOnly, "word")
+            '(strShortWordList(intWordIndex), vbOKOnly, "word")
         Next
         Return strShortWordList
     End Function
 
+    Private Sub SetIconsToPicBoxes(ByVal intCurrSample As Integer)
+        ' populates the picture boxes with icons
+        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim intI As Integer = intCurrSample
+        picOption1.BackgroundImage = currSampleImage
+        picOption1.SizeMode = PictureBoxSizeMode.StretchImage
+        If (intI + 1) < _strIconsList.Length() Then
+            picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
+            picOption2.SizeMode = PictureBoxSizeMode.StretchImage
+        Else
+            intI = 0
+            picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            picOption2.SizeMode = PictureBoxSizeMode.StretchImage
+            If (intI + 2) < _strIconsList.Length() Then
+                picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
+                picOption3.SizeMode = PictureBoxSizeMode.StretchImage
+            Else
+                intI = 0
+                picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
+                picOption3.SizeMode = PictureBoxSizeMode.StretchImage
+                If (intI + 3) < _strIconsList.Length() Then
+                    picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
+                    picOption4.SizeMode = PictureBoxSizeMode.StretchImage
+                Else
+                    intI = 0
+                    picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
+                    picOption4.SizeMode = PictureBoxSizeMode.StretchImage
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
         ' decides of is correct icon
         readyForNext = True
+        lblInstructions.Text = "option 1"
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
         ' decides of is correct icon
         readyForNext = True
+        lblInstructions.Text = "option 2"
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
         ' decides of is correct icon
         readyForNext = True
+        lblInstructions.Text = "option 3"
     End Sub
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
         ' decides of is correct icon
         readyForNext = True
+        lblInstructions.Text = "option 4"
     End Sub
 End Class
