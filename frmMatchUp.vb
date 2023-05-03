@@ -437,4 +437,37 @@ Public Class frmMatchUp
 
     End Sub
 
+    Private Sub picOption1_MouseHover(sender As Object, e As EventArgs) Handles picOption1.MouseHover
+        picOption1.BorderStyle = BorderStyle.Fixed3D
+    End Sub
+
+    Private Sub picOption1_MouseLeave(sender As Object, e As EventArgs) Handles picOption1.MouseLeave
+        picOption1.BorderStyle = BorderStyle.None
+    End Sub
+
+    Private Sub picOption2_MouseHover(sender As Object, e As EventArgs) Handles picOption2.MouseHover
+        picOption2.BorderStyle = BorderStyle.Fixed3D
+    End Sub
+
+    Private Sub picOption2_MouseLeave(sender As Object, e As EventArgs) Handles picOption2.MouseLeave
+        picOption2.BorderStyle = BorderStyle.None
+    End Sub
+
+
+    Private Sub picOption3_MouseHover(sender As Object, e As EventArgs) Handles picOption3.MouseHover
+        picOption3.BorderStyle = BorderStyle.Fixed3D
+    End Sub
+
+    Private Sub picOption3_MouseLeave(sender As Object, e As EventArgs) Handles picOption3.MouseLeave
+        picOption3.BorderStyle = BorderStyle.None
+    End Sub
+
+    Private Sub picOption4_MouseHover(sender As Object, e As EventArgs) Handles picOption4.MouseHover
+        picOption4.BorderStyle = BorderStyle.Fixed3D
+    End Sub
+
+    Private Sub picOption4_MouseLeave(sender As Object, e As EventArgs) Handles picOption4.MouseLeave
+        picOption4.BorderStyle = BorderStyle.None
+    End Sub
+
 End Class
