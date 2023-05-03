@@ -140,8 +140,8 @@ Public Class frmMatchUp
 
     Private Sub ShowIconOptions()
         grpIcons.Visible = True
-        lblInstructions.Text = ""
-        lblInstructions.Visible = True
+        'lblInstructions.Text = ""
+        'lblInstructions.Visible = True
     End Sub
 
     Private Sub GetWords()
@@ -189,6 +189,7 @@ Public Class frmMatchUp
         ShortCreateTaskItems(currWordIndex) ' create task items
         'SetIconsToPicBoxes(intCurrWordIndex)
         SetIconsByTaskItem()
+        'ShortSetIconsToPicBoxes(currWordIndex)
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
@@ -386,44 +387,20 @@ Public Class frmMatchUp
         Dim picBox2 = New TaskItem()
         Dim picBox3 = New TaskItem()
         Dim picBox4 = New TaskItem()
-        ReDim _tskAllTaskItems(4)
+        ReDim _tskAllTaskItems(3)
         'add task items to array:
         _tskAllTaskItems(0) = picBox1
         _tskAllTaskItems(1) = picBox2
         _tskAllTaskItems(2) = picBox3
         _tskAllTaskItems(3) = picBox4
         'set task item images
-        picBox1.UpdateTaskItem(currSampleImage, intI)
-        If (intI + 1) < _strShortIconList.Length() Then
-            'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
-            currSampleImage = Image.FromFile(_strShortIconList(intI + 1))
-            picBox2.UpdateTaskItem(currSampleImage, intI + 1)
-        Else
-            intI = 0
-            'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strShortIconList(intI))
-            picBox2.UpdateTaskItem(currSampleImage, intI)
-        End If
-        If (intI + 2) < _strShortIconList.Length() Then
-            'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
-            currSampleImage = Image.FromFile(_strShortIconList(intI + 2))
-            picBox3.UpdateTaskItem(currSampleImage, intI + 2)
-        Else
-            intI = 0
-            'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strShortIconList(intI))
-            picBox3.UpdateTaskItem(currSampleImage, intI)
-        End If
-        If (intI + 3) < _strShortIconList.Length() Then
-            'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
-            currSampleImage = Image.FromFile(_strShortIconList(intI + 3))
-            picBox4.UpdateTaskItem(currSampleImage, intI + 3)
-        Else
-            intI = 0
-            'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strShortIconList(intI))
-            picBox4.UpdateTaskItem(currSampleImage, intI)
-        End If
+        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
+        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
+        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
+        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
 
     End Sub
 
@@ -452,7 +429,6 @@ Public Class frmMatchUp
     Private Sub picOption2_MouseLeave(sender As Object, e As EventArgs) Handles picOption2.MouseLeave
         picOption2.BorderStyle = BorderStyle.None
     End Sub
-
 
     Private Sub picOption3_MouseHover(sender As Object, e As EventArgs) Handles picOption3.MouseHover
         picOption3.BorderStyle = BorderStyle.Fixed3D
