@@ -28,6 +28,7 @@ Public Class frmMatchUp
     Private readyForNext As Boolean = False
     Private _correct As Boolean()
     Private _tskAllTaskItems As TaskItem()
+    Private _strShortIconList As String()
 
     'picture/icons:
     Private _strIconsList(9) As String 'Holds icons
@@ -101,10 +102,7 @@ Public Class frmMatchUp
         'temp variables:
         Dim intNumTasks As Integer = 5
         Dim intCurrTask As Integer
-        'show word
-        'For intCurrTask = 0 To (intNumTasks - 1)
-        'ShowWord(intCurrTask)
-        'Next
+
         'determine game type:
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             PlayShortTask()
@@ -165,16 +163,17 @@ Public Class frmMatchUp
         'Present word series:
         Dim intCurrWordIndex As Integer = 0
         readyForNext = True
-        Do While intCurrWordIndex <= (strShortList.Length() - 1)
-            ShowWord(intCurrWordIndex, strShortList)
-            intCurrWordSampleIndex = intCurrWordIndex
-            CreateTaskItems(intCurrWordIndex) ' create task items
-            'SetIconsToPicBoxes(intCurrWordIndex)
-            SetIconsByTaskItem()
-            btnOK.Visible = True
-            btnOK.Enabled = True
-            intCurrWordIndex += 1
-        Loop
+        'Do While intCurrWordIndex <= (strShortList.Length() - 1)
+        ShowWord(intCurrWordIndex, strShortList)
+        intCurrWordSampleIndex = intCurrWordIndex
+        GetShortIconList()
+        ShortCreateTaskItems(intCurrWordIndex) ' create task items
+        'SetIconsToPicBoxes(intCurrWordIndex)
+        SetIconsByTaskItem()
+        btnOK.Visible = True
+        btnOK.Enabled = True
+        'intCurrWordIndex += 1
+        'Loop
     End Sub
 
     Private Function GetShortList() As String()
@@ -188,34 +187,42 @@ Public Class frmMatchUp
         Return strShortWordList
     End Function
 
-    Private Sub SetIconsToPicBoxes(ByVal intCurrSample As Integer)
+    Private Sub GetShortIconList()
+        Dim intIndex As Integer
+        ReDim _strShortIconList(4)
+        For intIndex = 0 To _strShortIconList.Length() - 1
+            _strShortIconList(intIndex) = _strIconsList(intIndex)
+        Next
+    End Sub
+
+    Private Sub ShortSetIconsToPicBoxes(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons
-        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
         Dim intI As Integer = intCurrSample
         picOption1.BackgroundImage = currSampleImage
         'MsgBox(_strIconsList(intCurrSample), vbOKOnly, "option 1")
-        If (intI + 1) < _strIconsList.Length() Then
-            picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
+        If (intI + 1) < _strShortIconList.Length() Then
+            picOption2.BackgroundImage = Image.FromFile(_strShortIconList(intI + 1))
             'MsgBox(_strIconsList(intI + 1), vbOKOnly, "option 2")
         Else
             intI = 0
-            picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            picOption2.BackgroundImage = Image.FromFile(_strShortIconList(intI))
             'MsgBox(_strIconsList(intI), vbOKOnly, "option 2")
         End If
-        If (intI + 2) < _strIconsList.Length() Then
-            picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
+        If (intI + 2) < _strShortIconList.Length() Then
+            picOption3.BackgroundImage = Image.FromFile(_strShortIconList(intI + 2))
             'MsgBox(_strIconsList(intI + 2), vbOKOnly, "option 3")
         Else
             intI = 0
-            picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            picOption3.BackgroundImage = Image.FromFile(_strShortIconList(intI))
             'MsgBox(_strIconsList(intI), vbOKOnly, "option 3")
         End If
-        If (intI + 3) < _strIconsList.Length() Then
-            picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
+        If (intI + 3) < _strShortIconList.Length() Then
+            picOption4.BackgroundImage = Image.FromFile(_strShortIconList(intI + 3))
             'MsgBox(_strIconsList(intI + 3), vbOKOnly, "option 4")
         Else
             intI = 0
-            picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            picOption4.BackgroundImage = Image.FromFile(_strShortIconList(intI))
             'MsgBox(_strIconsList(intI), vbOKOnly, "option 4")
         End If
 
@@ -283,9 +290,9 @@ Public Class frmMatchUp
 
     End Class
 
-    Private Sub CreateTaskItems(ByVal intCurrSample As Integer)
+    Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons
-        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
         Dim intI As Integer = intCurrSample
         'picOption1.BackgroundImage = currSampleImage
         Dim picBox1 = New TaskItem()
@@ -300,34 +307,34 @@ Public Class frmMatchUp
         _tskAllTaskItems(3) = picBox4
         'set task item images
         picBox1.UpdateTaskItem(currSampleImage, intI)
-        If (intI + 1) < _strIconsList.Length() Then
+        If (intI + 1) < _strShortIconList.Length() Then
             'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
-            currSampleImage = Image.FromFile(_strIconsList(intI + 1))
+            currSampleImage = Image.FromFile(_strShortIconList(intI + 1))
             picBox2.UpdateTaskItem(currSampleImage, intI + 1)
         Else
             intI = 0
             'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strShortIconList(intI))
             picBox2.UpdateTaskItem(currSampleImage, intI)
         End If
-        If (intI + 2) < _strIconsList.Length() Then
+        If (intI + 2) < _strShortIconList.Length() Then
             'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
-            currSampleImage = Image.FromFile(_strIconsList(intI + 2))
+            currSampleImage = Image.FromFile(_strShortIconList(intI + 2))
             picBox3.UpdateTaskItem(currSampleImage, intI + 2)
         Else
             intI = 0
             'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strShortIconList(intI))
             picBox3.UpdateTaskItem(currSampleImage, intI)
         End If
-        If (intI + 3) < _strIconsList.Length() Then
+        If (intI + 3) < _strShortIconList.Length() Then
             'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
-            currSampleImage = Image.FromFile(_strIconsList(intI + 3))
+            currSampleImage = Image.FromFile(_strShortIconList(intI + 3))
             picBox4.UpdateTaskItem(currSampleImage, intI + 3)
         Else
             intI = 0
             'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
-            currSampleImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strShortIconList(intI))
             picBox4.UpdateTaskItem(currSampleImage, intI)
         End If
 
