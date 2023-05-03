@@ -133,6 +133,7 @@ Public Class frmMatchUp
         btnOK.Visible = False
         ShowIconOptions()
         readyForNext = False
+        HideCheck()
     End Sub
 
     'Event btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
@@ -173,24 +174,23 @@ Public Class frmMatchUp
         ' MsgBox(wordArray(taskNum), vbOKOnly, "task word")
     End Sub
 
-    Private Sub PlayShortTask(ByRef intCurrWordIndex As Integer)
-        HideCheck()
-        'get 5 words from list
-        Dim strShortList As String() = GetShortList()
-        'Present word series:
+    Private strShortList As String()
 
-        'readyForNext = True
-        'Do While intCurrWordIndex <= (strShortList.Length() - 1)
-        ShowWord(intCurrWordIndex, strShortList)
-        intCurrWordSampleIndex = intCurrWordIndex
+    Private Sub PlayShortTask(ByRef intCurrWordIndex As Integer)
+        strShortList = GetShortList()
         GetShortIconList()
-        ShortCreateTaskItems(intCurrWordIndex) ' create task items
+        NextShortTask(intCurrWordIndex)
+
+    End Sub
+
+    Private Sub NextShortTask(ByRef currWordIndex As Integer)
+        ShowWord(currWordIndex, strShortList)
+        intCurrWordSampleIndex = currWordIndex
+        ShortCreateTaskItems(currWordIndex) ' create task items
         'SetIconsToPicBoxes(intCurrWordIndex)
         SetIconsByTaskItem()
         btnOK.Visible = True
         btnOK.Enabled = True
-        'intCurrWordIndex += 1
-        'Loop
     End Sub
 
     Private Function GetShortList() As String()
@@ -273,11 +273,12 @@ Public Class frmMatchUp
         intCurrWordIndex += 1
         If cboMode.SelectedIndex = 0 Then
             If intCurrWordIndex < _strShortIconList.Length() Then
-                Threading.Thread.Sleep(3000)
-                PlayShortTask(intCurrWordIndex)
+                NextShortTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
             End If
         End If
 
@@ -295,11 +296,12 @@ Public Class frmMatchUp
         intCurrWordIndex += 1
         If cboMode.SelectedIndex = 0 Then
             If intCurrWordIndex < _strShortIconList.Length() Then
-                Threading.Thread.Sleep(3000)
-                PlayShortTask(intCurrWordIndex)
+                NextShortTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
             End If
         End If
     End Sub
@@ -316,11 +318,12 @@ Public Class frmMatchUp
         intCurrWordIndex += 1
         If cboMode.SelectedIndex = 0 Then
             If intCurrWordIndex < _strShortIconList.Length() Then
-                Threading.Thread.Sleep(3000)
-                PlayShortTask(intCurrWordIndex)
+                NextShortTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
             End If
         End If
     End Sub
@@ -337,11 +340,12 @@ Public Class frmMatchUp
         intCurrWordIndex += 1
         If cboMode.SelectedIndex = 0 Then
             If intCurrWordIndex < _strShortIconList.Length() Then
-                Threading.Thread.Sleep(3000)
-                PlayShortTask(intCurrWordIndex)
+                NextShortTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
             End If
         End If
     End Sub
