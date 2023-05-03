@@ -40,6 +40,7 @@ Partial Class frmMatchUp
         Me.picCorrect = New System.Windows.Forms.PictureBox()
         Me.picMind = New System.Windows.Forms.PictureBox()
         Me.picHead = New System.Windows.Forms.PictureBox()
+        Me.lblTotalCorrect = New System.Windows.Forms.Label()
         Me.grpTaskSize.SuspendLayout()
         Me.grpIcons.SuspendLayout()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -253,12 +254,23 @@ Partial Class frmMatchUp
         Me.picHead.TabIndex = 1
         Me.picHead.TabStop = False
         '
+        'lblTotalCorrect
+        '
+        Me.lblTotalCorrect.Font = New System.Drawing.Font("Rockwell", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalCorrect.Location = New System.Drawing.Point(12, 303)
+        Me.lblTotalCorrect.Name = "lblTotalCorrect"
+        Me.lblTotalCorrect.Size = New System.Drawing.Size(1065, 232)
+        Me.lblTotalCorrect.TabIndex = 12
+        Me.lblTotalCorrect.Text = "Nice Work! XX/XX"
+        Me.lblTotalCorrect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'frmMatchUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.lblTotalCorrect)
         Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblHeading)
         Me.Controls.Add(Me.btnExit)
@@ -305,4 +317,5 @@ Partial Class frmMatchUp
     Friend WithEvents btnStart As Button
     Friend WithEvents btnExit As Button
     Friend WithEvents btnOK As Button
+    Friend WithEvents lblTotalCorrect As Label
 End Class

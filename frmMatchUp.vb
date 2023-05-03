@@ -24,11 +24,13 @@ Public Class frmMatchUp
     Private _strWordList(9) As String 'holds target words 
     Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
     Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
-    Private intCurrWordSampleIndex As Integer
+    Private intCurrWordSampleIndex As Integer 'the index of current word displayed
     Private readyForNext As Boolean = False
     Private _correct As Boolean()
-    Private _tskAllTaskItems As TaskItem()
-    Private _strShortIconList As String()
+    Private _tskAllTaskItems As TaskItem() ' holds task items for short or long tasks
+    Private _strShortIconList As String() 'holds icon paths as string in short match task
+    Private intTotalCorrect As Integer = 0 'the total number correct matches
+    Private intCurrWordIndex As Integer = 0
 
     'picture/icons:
     Private _strIconsList(9) As String 'Holds icons
@@ -60,6 +62,7 @@ Public Class frmMatchUp
         btnStart.Enabled = False
         lblSampleWord.Visible = False
         grpTaskSize.Visible = False
+        HideTotalCorrect()
         ShowLogo() 'show the app logo
     End Sub
 
@@ -75,6 +78,19 @@ Public Class frmMatchUp
         picMind.Visible = True
     End Sub
 
+    Private Sub HideTotalCorrect()
+        lblTotalCorrect.Visible = False
+    End Sub
+
+    Private Sub ShowTotalCorrect()
+        lblTotalCorrect.Visible = True
+    End Sub
+
+    Private Sub UpdateTotalCorrectLabel()
+        Dim strTotalCorrectMessage = "Nice! {0}/{1}"
+        strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+        lblTotalCorrect.Text = strTotalCorrectMessage
+    End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         'closes program
@@ -105,7 +121,7 @@ Public Class frmMatchUp
 
         'determine game type:
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            PlayShortTask()
+            PlayShortTask(intCurrWordIndex)
         Else
             'PlayLongTask()
         End If
@@ -157,12 +173,13 @@ Public Class frmMatchUp
         ' MsgBox(wordArray(taskNum), vbOKOnly, "task word")
     End Sub
 
-    Private Sub PlayShortTask()
+    Private Sub PlayShortTask(ByRef intCurrWordIndex As Integer)
+        HideCheck()
         'get 5 words from list
         Dim strShortList As String() = GetShortList()
         'Present word series:
-        Dim intCurrWordIndex As Integer = 0
-        readyForNext = True
+
+        'readyForNext = True
         'Do While intCurrWordIndex <= (strShortList.Length() - 1)
         ShowWord(intCurrWordIndex, strShortList)
         intCurrWordSampleIndex = intCurrWordIndex
@@ -232,45 +249,111 @@ Public Class frmMatchUp
         picCorrect.Visible = True
     End Sub
 
+    Private Sub HideCheck()
+        picCorrect.Visible = False
+    End Sub
+
+    Private Sub HideIcons()
+        grpIcons.Visible = False
+    End Sub
+
+    Private Sub ShowIcons()
+        grpIcons.Visible = True
+    End Sub
+
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
         ' decides of is correct icon
-        readyForNext = True
+        'readyForNext = True
         'lblInstructions.Text = "option 1"
         If DetermineCorrect(0, intCurrWordSampleIndex) Then
             ShowCheck()
+            AddToScore()
         End If
+        HideIcons()
+        intCurrWordIndex += 1
+        If cboMode.SelectedIndex = 0 Then
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                Threading.Thread.Sleep(3000)
+                PlayShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+            End If
+        End If
+
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
         ' decides of is correct icon
-        readyForNext = True
+        'readyForNext = True
         'lblInstructions.Text = "option 2"
         If DetermineCorrect(1, intCurrWordSampleIndex) Then
             ShowCheck()
+            AddToScore()
+        End If
+        HideIcons()
+        intCurrWordIndex += 1
+        If cboMode.SelectedIndex = 0 Then
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                Threading.Thread.Sleep(3000)
+                PlayShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+            End If
         End If
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
         ' decides of is correct icon
-        readyForNext = True
+        'readyForNext = True
         'lblInstructions.Text = "option 3"
         If DetermineCorrect(2, intCurrWordSampleIndex) Then
             ShowCheck()
+            AddToScore()
+        End If
+        HideIcons()
+        intCurrWordIndex += 1
+        If cboMode.SelectedIndex = 0 Then
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                Threading.Thread.Sleep(3000)
+                PlayShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+            End If
         End If
     End Sub
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
         ' decides of is correct icon
-        readyForNext = True
+        'readyForNext = True
         'lblInstructions.Text = "option 4"
         If DetermineCorrect(3, intCurrWordSampleIndex) Then
             ShowCheck()
+            AddToScore()
+        End If
+        HideIcons()
+        intCurrWordIndex += 1
+        If cboMode.SelectedIndex = 0 Then
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                Threading.Thread.Sleep(3000)
+                PlayShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+            End If
         End If
     End Sub
 
     Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
         Return _tskAllTaskItems(optionIndex).GetTaskIndex() = intWordIndex
     End Function
+
+    Private Sub AddToScore()
+        intTotalCorrect += 1
+    End Sub
+
     Private Class TaskItem
         'task item holds image and associated index during matching tasks
         Private taskImage As Image
