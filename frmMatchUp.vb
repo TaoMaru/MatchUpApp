@@ -25,6 +25,7 @@ Public Class frmMatchUp
     Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
     Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
     Private readyForNext As Boolean = False
+    Private _correct As Boolean()
 
     'picture/icons:
     Private _strIconsList(9) As String 'Holds icons
@@ -73,10 +74,12 @@ Public Class frmMatchUp
 
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
+        'closes program
         Close()
     End Sub
 
     Private Sub cboMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboMode.SelectedIndexChanged
+        'handles selection of cboMode change
         lblInstructions.Visible = False
         grpTaskSize.Visible = True
         rdoShort.Checked = True
@@ -236,4 +239,63 @@ Public Class frmMatchUp
         readyForNext = True
         lblInstructions.Text = "option 4"
     End Sub
+
+    Private Sub DetermineCorrect()
+
+    End Sub
+    Private Class TaskItem
+        'task item holds image and associated index during matching tasks
+        Private taskImage As Image
+        Private intIndex As Integer
+        'constructor:
+        Public Sub UpdateTaskItem(tImage As Image, intTIndex As Integer)
+            taskImage = tImage
+            intIndex = intTIndex
+        End Sub
+
+    End Class
+
+    Private Sub CreateTaskItems(ByVal intCurrSample As Integer)
+        ' populates the picture boxes with icons
+        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim intI As Integer = intCurrSample
+        'picOption1.BackgroundImage = currSampleImage
+        Dim picBox1 = New TaskItem()
+        Dim picBox2 = New TaskItem()
+        Dim picBox3 = New TaskItem()
+        Dim picBox4 = New TaskItem()
+        picBox1.UpdateTaskItem(currSampleImage, intI)
+        If (intI + 1) < _strIconsList.Length() Then
+            'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
+            currSampleImage = Image.FromFile(_strIconsList(intI + 1))
+            picBox2.UpdateTaskItem(currSampleImage, intI + 1)
+        Else
+            intI = 0
+            'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strIconsList(intI))
+            picBox2.UpdateTaskItem(currSampleImage, intI)
+        End If
+        If (intI + 2) < _strIconsList.Length() Then
+            'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI + 2))
+            currSampleImage = Image.FromFile(_strIconsList(intI + 2))
+            picBox3.UpdateTaskItem(currSampleImage, intI + 2)
+        Else
+            intI = 0
+            'picOption3.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strIconsList(intI))
+            picBox3.UpdateTaskItem(currSampleImage, intI)
+        End If
+        If (intI + 3) < _strIconsList.Length() Then
+            'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI + 3))
+            currSampleImage = Image.FromFile(_strIconsList(intI + 3))
+            picBox4.UpdateTaskItem(currSampleImage, intI + 3)
+        Else
+            intI = 0
+            'picOption4.BackgroundImage = Image.FromFile(_strIconsList(intI))
+            currSampleImage = Image.FromFile(_strIconsList(intI))
+            picBox4.UpdateTaskItem(currSampleImage, intI)
+        End If
+
+    End Sub
+
 End Class
