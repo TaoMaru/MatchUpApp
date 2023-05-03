@@ -24,8 +24,10 @@ Public Class frmMatchUp
     Private _strWordList(9) As String 'holds target words 
     Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
     Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
+    Private intCurrWordSampleIndex As Integer
     Private readyForNext As Boolean = False
     Private _correct As Boolean()
+    Private _tskAllTaskItems As TaskItem()
 
     'picture/icons:
     Private _strIconsList(9) As String 'Holds icons
@@ -165,7 +167,10 @@ Public Class frmMatchUp
         readyForNext = True
         Do While intCurrWordIndex <= (strShortList.Length() - 1)
             ShowWord(intCurrWordIndex, strShortList)
-            SetIconsToPicBoxes(intCurrWordIndex)
+            intCurrWordSampleIndex = intCurrWordIndex
+            CreateTaskItems(intCurrWordIndex) ' create task items
+            'SetIconsToPicBoxes(intCurrWordIndex)
+            SetIconsByTaskItem()
             btnOK.Visible = True
             btnOK.Enabled = True
             intCurrWordIndex += 1
@@ -216,33 +221,49 @@ Public Class frmMatchUp
 
     End Sub
 
+    Private Sub ShowCheck()
+        picCorrect.Visible = True
+    End Sub
+
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
         ' decides of is correct icon
         readyForNext = True
-        lblInstructions.Text = "option 1"
+        'lblInstructions.Text = "option 1"
+        If DetermineCorrect(0, intCurrWordSampleIndex) Then
+            ShowCheck()
+        End If
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
         ' decides of is correct icon
         readyForNext = True
-        lblInstructions.Text = "option 2"
+        'lblInstructions.Text = "option 2"
+        If DetermineCorrect(1, intCurrWordSampleIndex) Then
+            ShowCheck()
+        End If
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
         ' decides of is correct icon
         readyForNext = True
-        lblInstructions.Text = "option 3"
+        'lblInstructions.Text = "option 3"
+        If DetermineCorrect(2, intCurrWordSampleIndex) Then
+            ShowCheck()
+        End If
     End Sub
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
         ' decides of is correct icon
         readyForNext = True
-        lblInstructions.Text = "option 4"
+        'lblInstructions.Text = "option 4"
+        If DetermineCorrect(3, intCurrWordSampleIndex) Then
+            ShowCheck()
+        End If
     End Sub
 
-    Private Sub DetermineCorrect()
-
-    End Sub
+    Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
+        Return _tskAllTaskItems(optionIndex).GetTaskIndex() = intWordIndex
+    End Function
     Private Class TaskItem
         'task item holds image and associated index during matching tasks
         Private taskImage As Image
@@ -252,6 +273,13 @@ Public Class frmMatchUp
             taskImage = tImage
             intIndex = intTIndex
         End Sub
+
+        Public Function GetTaskImage()
+            Return taskImage
+        End Function
+        Public Function GetTaskIndex()
+            Return intIndex
+        End Function
 
     End Class
 
@@ -264,6 +292,13 @@ Public Class frmMatchUp
         Dim picBox2 = New TaskItem()
         Dim picBox3 = New TaskItem()
         Dim picBox4 = New TaskItem()
+        ReDim _tskAllTaskItems(4)
+        'add task items to array:
+        _tskAllTaskItems(0) = picBox1
+        _tskAllTaskItems(1) = picBox2
+        _tskAllTaskItems(2) = picBox3
+        _tskAllTaskItems(3) = picBox4
+        'set task item images
         picBox1.UpdateTaskItem(currSampleImage, intI)
         If (intI + 1) < _strIconsList.Length() Then
             'picOption2.BackgroundImage = Image.FromFile(_strIconsList(intI + 1))
@@ -295,6 +330,15 @@ Public Class frmMatchUp
             currSampleImage = Image.FromFile(_strIconsList(intI))
             picBox4.UpdateTaskItem(currSampleImage, intI)
         End If
+
+    End Sub
+
+    Private Sub SetIconsByTaskItem()
+        'sets background image of pic boxes by retrieving images from current task items
+        picOption1.BackgroundImage = _tskAllTaskItems(0).GetTaskImage()
+        picOption2.BackgroundImage = _tskAllTaskItems(1).GetTaskImage()
+        picOption3.BackgroundImage = _tskAllTaskItems(2).GetTaskImage()
+        picOption4.BackgroundImage = _tskAllTaskItems(3).GetTaskImage()
 
     End Sub
 

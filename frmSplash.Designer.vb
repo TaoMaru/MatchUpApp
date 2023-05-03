@@ -37,7 +37,7 @@ Partial Class frmSplash
         Me.lblTitle.Font = New System.Drawing.Font("Rockwell", 22.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTitle.Location = New System.Drawing.Point(266, 168)
         Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(220, 64)
+        Me.lblTitle.Size = New System.Drawing.Size(228, 64)
         Me.lblTitle.TabIndex = 1
         Me.lblTitle.Text = "Match Up!"
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
