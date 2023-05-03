@@ -335,6 +335,7 @@ Public Class frmMatchUp
 
     Private Sub SetIconsByTaskItem()
         'sets background image of pic boxes by retrieving images from current task items
+        'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
         picOption1.BackgroundImage = _tskAllTaskItems(0).GetTaskImage()
         picOption2.BackgroundImage = _tskAllTaskItems(1).GetTaskImage()
         picOption3.BackgroundImage = _tskAllTaskItems(2).GetTaskImage()
