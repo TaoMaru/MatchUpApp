@@ -64,6 +64,14 @@ Public Class frmMatchUp
         grpTaskSize.Visible = False
         HideTotalCorrect()
         ShowLogo() 'show the app logo
+        lblTimer.Text = 0
+    End Sub
+
+    'timer:
+    Private intTimeKeeper As Integer = 0
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        lblTimer.Text += 1 'track timer: increments every .5 sec
+        intTimeKeeper += 1
     End Sub
 
     Private Sub HideLogo()
@@ -88,7 +96,11 @@ Public Class frmMatchUp
 
     Private Sub UpdateTotalCorrectLabel()
         Dim strTotalCorrectMessage = "Nice! {0}/{1}"
-        strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
+        End If
         lblTotalCorrect.Text = strTotalCorrectMessage
     End Sub
 
@@ -123,7 +135,7 @@ Public Class frmMatchUp
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             PlayShortTask(intCurrWordIndex)
         Else
-            'PlayLongTask()
+            PlayLongTask(intCurrWordIndex)
         End If
     End Sub
 
@@ -180,7 +192,11 @@ Public Class frmMatchUp
         strShortList = GetShortList()
         GetShortIconList()
         NextShortTask(intCurrWordIndex)
+    End Sub
 
+    Private Sub PlayLongTask(ByRef intCurrWordIndex As Integer)
+
+        NextLongTask(intCurrWordIndex)
     End Sub
 
     Private Sub NextShortTask(ByRef currWordIndex As Integer)
@@ -190,6 +206,16 @@ Public Class frmMatchUp
         'SetIconsToPicBoxes(intCurrWordIndex)
         SetIconsByTaskItem()
         'ShortSetIconsToPicBoxes(currWordIndex)
+        btnOK.Visible = True
+        btnOK.Enabled = True
+    End Sub
+
+    Private Sub NextLongTask(ByRef currWordIndex As Integer)
+        ShowWord(currWordIndex, _strWordList)
+        intCurrWordSampleIndex = currWordIndex
+        LongCreateTaskItems(currWordIndex) 'create task items
+        SetIconsByTaskItem()
+        'ready OK btn
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
@@ -272,9 +298,18 @@ Public Class frmMatchUp
         End If
         HideIcons()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 Then
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
+            End If
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            If intCurrWordIndex < _strIconsList.Length() Then
+                NextLongTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
@@ -295,9 +330,18 @@ Public Class frmMatchUp
         End If
         HideIcons()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 Then
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
+            End If
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            If intCurrWordIndex < _strIconsList.Length() Then
+                NextLongTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
@@ -317,9 +361,18 @@ Public Class frmMatchUp
         End If
         HideIcons()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 Then
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
+            End If
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            If intCurrWordIndex < _strIconsList.Length() Then
+                NextLongTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
@@ -339,9 +392,18 @@ Public Class frmMatchUp
         End If
         HideIcons()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 Then
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
+            Else
+                UpdateTotalCorrectLabel()
+                ShowTotalCorrect()
+                btnExit.Visible = True
+                btnExit.Enabled = True
+            End If
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                NextLongTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
@@ -404,6 +466,32 @@ Public Class frmMatchUp
 
     End Sub
 
+    Private Sub LongCreateTaskItems(ByVal intCurrSample As Integer)
+        ' populates the picture boxes with icons
+        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim intI As Integer = intCurrSample
+        'picOption1.BackgroundImage = currSampleImage
+        Dim picBox1 = New TaskItem()
+        Dim picBox2 = New TaskItem()
+        Dim picBox3 = New TaskItem()
+        Dim picBox4 = New TaskItem()
+        ReDim _tskAllTaskItems(3)
+        'add task items to array:
+        _tskAllTaskItems(0) = picBox1
+        _tskAllTaskItems(1) = picBox2
+        _tskAllTaskItems(2) = picBox3
+        _tskAllTaskItems(3) = picBox4
+        'set task item images
+        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+
+    End Sub
+
     Private Sub SetIconsByTaskItem()
         'sets background image of pic boxes by retrieving images from current task items
         'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
@@ -445,5 +533,6 @@ Public Class frmMatchUp
     Private Sub picOption4_MouseLeave(sender As Object, e As EventArgs) Handles picOption4.MouseLeave
         picOption4.BorderStyle = BorderStyle.None
     End Sub
+
 
 End Class

@@ -22,6 +22,7 @@ Partial Class frmMatchUp
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.lblHeading = New System.Windows.Forms.Label()
         Me.grpTaskSize = New System.Windows.Forms.GroupBox()
         Me.rdoLong = New System.Windows.Forms.RadioButton()
@@ -41,6 +42,8 @@ Partial Class frmMatchUp
         Me.picMind = New System.Windows.Forms.PictureBox()
         Me.picHead = New System.Windows.Forms.PictureBox()
         Me.lblTotalCorrect = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.lblTimer = New System.Windows.Forms.Label()
         Me.grpTaskSize.SuspendLayout()
         Me.grpIcons.SuspendLayout()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -257,12 +260,26 @@ Partial Class frmMatchUp
         'lblTotalCorrect
         '
         Me.lblTotalCorrect.Font = New System.Drawing.Font("Rockwell", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotalCorrect.Location = New System.Drawing.Point(12, 303)
+        Me.lblTotalCorrect.Location = New System.Drawing.Point(13, 275)
         Me.lblTotalCorrect.Name = "lblTotalCorrect"
         Me.lblTotalCorrect.Size = New System.Drawing.Size(1065, 232)
         Me.lblTotalCorrect.TabIndex = 12
         Me.lblTotalCorrect.Text = "Nice Work! XX/XX"
         Me.lblTotalCorrect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Timer1
+        '
+        Me.Timer1.Interval = 500
+        '
+        'lblTimer
+        '
+        Me.lblTimer.AutoSize = True
+        Me.lblTimer.Location = New System.Drawing.Point(-1, 539)
+        Me.lblTimer.Name = "lblTimer"
+        Me.lblTimer.Size = New System.Drawing.Size(51, 17)
+        Me.lblTimer.TabIndex = 13
+        Me.lblTimer.Text = "Label1"
+        Me.lblTimer.Visible = False
         '
         'frmMatchUp
         '
@@ -270,6 +287,7 @@ Partial Class frmMatchUp
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.lblTimer)
         Me.Controls.Add(Me.lblTotalCorrect)
         Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.lblHeading)
@@ -296,6 +314,7 @@ Partial Class frmMatchUp
         CType(Me.picMind, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picHead, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -318,4 +337,6 @@ Partial Class frmMatchUp
     Friend WithEvents btnExit As Button
     Friend WithEvents btnOK As Button
     Friend WithEvents lblTotalCorrect As Label
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents lblTimer As Label
 End Class
