@@ -12,6 +12,7 @@
 ''          
 Public Class frmMatchUp
     Private Sub frmMatchUp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'hides splash screen after 5 seconds, resets form, gets words and icons from file
         Threading.Thread.Sleep(5000)
         MaximizeBox = False
         MinimizeBox = False
@@ -30,7 +31,7 @@ Public Class frmMatchUp
     Private _tskAllTaskItems As TaskItem() ' holds task items for short or long tasks
     Private _strShortIconList As String() 'holds icon paths as string in short match task
     Private intTotalCorrect As Integer = 0 'the total number correct matches
-    Private intCurrWordIndex As Integer = 0
+    Private intCurrWordIndex As Integer = 0 'the index of the current target word
 
     'sample words & file I/O:
     Private Sub GetWords()
@@ -91,9 +92,11 @@ Public Class frmMatchUp
 
     'timer:
     Private intTimeKeeper As Integer = 0
+    Private readyToShow As Boolean = False
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         lblTimer.Text += 1 'track timer: increments every .5 sec
-        intTimeKeeper += 1
+        intTimeKeeper = Convert.ToInt32(lblTimer.Text)
+
     End Sub
 
     Private Sub HideLogo()
@@ -232,14 +235,11 @@ Public Class frmMatchUp
         'hides btnOk
         btnOK.Visible = False
         ShowIconOptions()
-        readyForNext = False
         HideCheck()
     End Sub
 
     Private Sub ShowIconOptions()
         grpIcons.Visible = True
-        'lblInstructions.Text = ""
-        'lblInstructions.Visible = True
     End Sub
 
     Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
@@ -280,32 +280,34 @@ Public Class frmMatchUp
     Private strShortList As String()
 
     Private Sub PlayShortTask(ByRef intCurrWordIndex As Integer)
-        strShortList = GetShortList()
-        GetShortIconList()
-        NextShortTask(intCurrWordIndex)
+        'runs through the first 5 words in the word list
+        strShortList = GetShortList() 'create a short version of the word list
+        GetShortIconList() 'create short version of the icon list
+        NextShortTask(intCurrWordIndex) 'play a task: show word, get selection, continue
     End Sub
 
     Private Sub PlayLongTask(ByRef intCurrWordIndex As Integer)
-
-        NextLongTask(intCurrWordIndex)
+        'runs through all 10 words in the word list
+        NextLongTask(intCurrWordIndex) 'play a task: show word, get selection, continue
     End Sub
 
     Private Sub NextShortTask(ByRef currWordIndex As Integer)
-        ShowWord(currWordIndex, strShortList)
-        intCurrWordSampleIndex = currWordIndex
+        'plays a word task: displays word, displays icon options, gets icon selection
+        ShowWord(currWordIndex, strShortList) 'use short list to grab target word
+        intCurrWordSampleIndex = currWordIndex 'update current target word index
         ShortCreateTaskItems(currWordIndex) ' create task items
-        'SetIconsToPicBoxes(intCurrWordIndex)
-        SetIconsByTaskItem()
-        'ShortSetIconsToPicBoxes(currWordIndex)
+        SetIconsByTaskItem() 'populate icons on screen as selection options
+        'ready OK btn
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
 
     Private Sub NextLongTask(ByRef currWordIndex As Integer)
-        ShowWord(currWordIndex, _strWordList)
-        intCurrWordSampleIndex = currWordIndex
+        'plays a word task in long task: displays word, displays icon option, gets icon selction
+        ShowWord(currWordIndex, _strWordList) 'use long list to grab target word
+        intCurrWordSampleIndex = currWordIndex 'update current target word index
         LongCreateTaskItems(currWordIndex) 'create task items
-        SetIconsByTaskItem()
+        SetIconsByTaskItem() 'populate icons on screen as selection options
         'ready OK btn
         btnOK.Visible = True
         btnOK.Enabled = True
@@ -331,26 +333,29 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub ShowCheck()
+        'shows correct checkmark
         picCorrect.Visible = True
     End Sub
 
     Private Sub HideCheck()
+        'hides checkmark
         picCorrect.Visible = False
     End Sub
 
     Private Sub HideIcons()
+        'shows icon group
         grpIcons.Visible = False
     End Sub
 
     Private Sub ShowIcons()
+        'hides icon group
         grpIcons.Visible = True
     End Sub
 
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
-        ' decides of is correct icon
-        'readyForNext = True
-        'lblInstructions.Text = "option 1"
+        ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(0, intCurrWordSampleIndex) Then
+            'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
         End If
@@ -375,14 +380,12 @@ Public Class frmMatchUp
                 btnExit.Enabled = True
             End If
         End If
-
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
-        ' decides of is correct icon
-        'readyForNext = True
-        'lblInstructions.Text = "option 2"
+        ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(1, intCurrWordSampleIndex) Then
+            'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
         End If
@@ -410,10 +413,9 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
-        ' decides of is correct icon
-        'readyForNext = True
-        'lblInstructions.Text = "option 3"
+        ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(2, intCurrWordSampleIndex) Then
+            'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
         End If
@@ -438,13 +440,13 @@ Public Class frmMatchUp
                 btnExit.Enabled = True
             End If
         End If
+
     End Sub
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
-        ' decides of is correct icon
-        'readyForNext = True
-        'lblInstructions.Text = "option 4"
+        ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(3, intCurrWordSampleIndex) Then
+            'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
         End If
@@ -460,7 +462,7 @@ Public Class frmMatchUp
                 btnExit.Enabled = True
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            If intCurrWordIndex < _strShortIconList.Length() Then
+            If intCurrWordIndex < _strIconsList.Length() Then
                 NextLongTask(intCurrWordIndex)
             Else
                 UpdateTotalCorrectLabel()
@@ -469,6 +471,7 @@ Public Class frmMatchUp
                 btnExit.Enabled = True
             End If
         End If
+
     End Sub
 
 
