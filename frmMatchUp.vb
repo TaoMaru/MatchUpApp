@@ -32,6 +32,30 @@ Public Class frmMatchUp
     Private intTotalCorrect As Integer = 0 'the total number correct matches
     Private intCurrWordIndex As Integer = 0
 
+    'sample words & file I/O:
+    Private Sub GetWords()
+        'get the list of target words & populate _strWordList with contents
+        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
+        Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
+        'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
+        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
+        'MsgBox(currDir, vbOKOnly, "currdir")
+        'MsgBox(filePath, vbOKOnly, "path")
+        Dim textReader As IO.StreamReader
+        Dim intIndex As Integer = 0
+
+        Try
+            textReader = IO.File.OpenText(filePath)
+            Do While textReader.Peek <> -1
+                _strWordList(intIndex) = textReader.ReadLine()
+                intIndex += 1
+            Loop
+        Catch ex As Exception
+            MsgBox("We had trouble reading the file. Please try again.", vbOKOnly, "File Read Error")
+            Reset()
+        End Try
+    End Sub
+
     'picture/icons:
     Private _strIconsList(9) As String 'Holds icons
     Private Sub CreateIconsList()
@@ -48,12 +72,10 @@ Public Class frmMatchUp
         _strIconsList(7) = IO.Path.Combine(iconDir, "smallSamplePNGs\house.png")
         _strIconsList(8) = IO.Path.Combine(iconDir, "smallSamplePNGs\phone.png")
         _strIconsList(9) = IO.Path.Combine(iconDir, "smallSamplePNGs\tree.png")
-        Dim intIconIndex As Integer
-        'For intIconIndex = 0 To (_strIconsList.Length() - 1)
-        'MsgBox(_strIconsList(intIconIndex), vbOKOnly, "icon path")
-        'Next
+
     End Sub
 
+    'General procedures:
     Private Sub ResetForm()
         'resets form to load state: hide btns and containers that are used in match tasks
         btnOK.Visible = False
@@ -86,24 +108,7 @@ Public Class frmMatchUp
         picMind.Visible = True
     End Sub
 
-    Private Sub HideTotalCorrect()
-        lblTotalCorrect.Visible = False
-    End Sub
-
-    Private Sub ShowTotalCorrect()
-        lblTotalCorrect.Visible = True
-    End Sub
-
-    Private Sub UpdateTotalCorrectLabel()
-        Dim strTotalCorrectMessage = "Nice! {0}/{1}"
-        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
-        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
-        End If
-        lblTotalCorrect.Text = strTotalCorrectMessage
-    End Sub
-
+    'General form events:
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         'closes program
         Close()
@@ -139,6 +144,89 @@ Public Class frmMatchUp
         End If
     End Sub
 
+
+    'Task Item class & task related actions:
+    Private Class TaskItem
+        'task item holds image and associated index during matching tasks
+        Private taskImage As Image
+        Private intIndex As Integer
+        'constructor:
+        Public Sub UpdateTaskItem(tImage As Image, intTIndex As Integer)
+            taskImage = tImage
+            intIndex = intTIndex
+        End Sub
+
+        Public Function GetTaskImage()
+            Return taskImage
+        End Function
+        Public Function GetTaskIndex()
+            Return intIndex
+        End Function
+
+    End Class
+
+    Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
+        ' populates the picture boxes with icons for a short (5 item) task
+        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
+        Dim intI As Integer = intCurrSample
+        'picOption1.BackgroundImage = currSampleImage
+        Dim picBox1 = New TaskItem()
+        Dim picBox2 = New TaskItem()
+        Dim picBox3 = New TaskItem()
+        Dim picBox4 = New TaskItem()
+        ReDim _tskAllTaskItems(3)
+        'add task items to array:
+        _tskAllTaskItems(0) = picBox1
+        _tskAllTaskItems(1) = picBox2
+        _tskAllTaskItems(2) = picBox3
+        _tskAllTaskItems(3) = picBox4
+        'set task item images
+        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
+        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
+        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
+        currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
+        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
+
+    End Sub
+
+    Private Sub LongCreateTaskItems(ByVal intCurrSample As Integer)
+        ' populates the picture boxes with icons for a long (10 item) task
+        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+        Dim intI As Integer = intCurrSample
+        'picOption1.BackgroundImage = currSampleImage
+        Dim picBox1 = New TaskItem()
+        Dim picBox2 = New TaskItem()
+        Dim picBox3 = New TaskItem()
+        Dim picBox4 = New TaskItem()
+        ReDim _tskAllTaskItems(3)
+        'add task items to array:
+        _tskAllTaskItems(0) = picBox1
+        _tskAllTaskItems(1) = picBox2
+        _tskAllTaskItems(2) = picBox3
+        _tskAllTaskItems(3) = picBox4
+        'set task item images
+        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
+        currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+
+    End Sub
+
+    Private Sub SetIconsByTaskItem()
+        'sets background image of pic boxes by retrieving images from current task items
+        'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
+        picOption1.BackgroundImage = _tskAllTaskItems(0).GetTaskImage()
+        picOption2.BackgroundImage = _tskAllTaskItems(1).GetTaskImage()
+        picOption3.BackgroundImage = _tskAllTaskItems(2).GetTaskImage()
+        picOption4.BackgroundImage = _tskAllTaskItems(3).GetTaskImage()
+
+    End Sub
+
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
         'shows grpIcon to present the image options to the user
         'hides btnOk
@@ -148,35 +236,38 @@ Public Class frmMatchUp
         HideCheck()
     End Sub
 
-    'Event btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-
     Private Sub ShowIconOptions()
         grpIcons.Visible = True
         'lblInstructions.Text = ""
         'lblInstructions.Visible = True
     End Sub
 
-    Private Sub GetWords()
-        'get the list of target words & populate _strWordList with contents
-        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
-        Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
-        'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
-        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
-        'MsgBox(currDir, vbOKOnly, "currdir")
-        'MsgBox(filePath, vbOKOnly, "path")
-        Dim textReader As IO.StreamReader
-        Dim intIndex As Integer = 0
+    Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
+        'determines if selected icon is the correct choice (a match to the sample)
+        Return _tskAllTaskItems(optionIndex).GetTaskIndex() = intWordIndex
+    End Function
 
-        Try
-            textReader = IO.File.OpenText(filePath)
-            Do While textReader.Peek <> -1
-                _strWordList(intIndex) = textReader.ReadLine()
-                intIndex += 1
-            Loop
-        Catch ex As Exception
-            MsgBox("We had trouble reading the file. Please try again.", vbOKOnly, "File Read Error")
-            Reset()
-        End Try
+    Private Sub AddToScore()
+        'increments the current score of total correct
+        intTotalCorrect += 1
+    End Sub
+
+    Private Sub HideTotalCorrect()
+        lblTotalCorrect.Visible = False
+    End Sub
+
+    Private Sub ShowTotalCorrect()
+        lblTotalCorrect.Visible = True
+    End Sub
+
+    Private Sub UpdateTotalCorrectLabel()
+        Dim strTotalCorrectMessage = "Nice! {0}/{1}"
+        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
+        End If
+        lblTotalCorrect.Text = strTotalCorrectMessage
     End Sub
 
     Private Sub ShowWord(ByVal taskNum As Integer, ByVal wordArray As String())
@@ -237,39 +328,6 @@ Public Class frmMatchUp
         For intIndex = 0 To _strShortIconList.Length() - 1
             _strShortIconList(intIndex) = _strIconsList(intIndex)
         Next
-    End Sub
-
-    Private Sub ShortSetIconsToPicBoxes(ByVal intCurrSample As Integer)
-        ' populates the picture boxes with icons
-        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
-        Dim intI As Integer = intCurrSample
-        picOption1.BackgroundImage = currSampleImage
-        'MsgBox(_strIconsList(intCurrSample), vbOKOnly, "option 1")
-        If (intI + 1) < _strShortIconList.Length() Then
-            picOption2.BackgroundImage = Image.FromFile(_strShortIconList(intI + 1))
-            'MsgBox(_strIconsList(intI + 1), vbOKOnly, "option 2")
-        Else
-            intI = 0
-            picOption2.BackgroundImage = Image.FromFile(_strShortIconList(intI))
-            'MsgBox(_strIconsList(intI), vbOKOnly, "option 2")
-        End If
-        If (intI + 2) < _strShortIconList.Length() Then
-            picOption3.BackgroundImage = Image.FromFile(_strShortIconList(intI + 2))
-            'MsgBox(_strIconsList(intI + 2), vbOKOnly, "option 3")
-        Else
-            intI = 0
-            picOption3.BackgroundImage = Image.FromFile(_strShortIconList(intI))
-            'MsgBox(_strIconsList(intI), vbOKOnly, "option 3")
-        End If
-        If (intI + 3) < _strShortIconList.Length() Then
-            picOption4.BackgroundImage = Image.FromFile(_strShortIconList(intI + 3))
-            'MsgBox(_strIconsList(intI + 3), vbOKOnly, "option 4")
-        Else
-            intI = 0
-            picOption4.BackgroundImage = Image.FromFile(_strShortIconList(intI))
-            'MsgBox(_strIconsList(intI), vbOKOnly, "option 4")
-        End If
-
     End Sub
 
     Private Sub ShowCheck()
@@ -413,124 +471,45 @@ Public Class frmMatchUp
         End If
     End Sub
 
-    Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
-        Return _tskAllTaskItems(optionIndex).GetTaskIndex() = intWordIndex
-    End Function
 
-    Private Sub AddToScore()
-        intTotalCorrect += 1
-    End Sub
-
-    Private Class TaskItem
-        'task item holds image and associated index during matching tasks
-        Private taskImage As Image
-        Private intIndex As Integer
-        'constructor:
-        Public Sub UpdateTaskItem(tImage As Image, intTIndex As Integer)
-            taskImage = tImage
-            intIndex = intTIndex
-        End Sub
-
-        Public Function GetTaskImage()
-            Return taskImage
-        End Function
-        Public Function GetTaskIndex()
-            Return intIndex
-        End Function
-
-    End Class
-
-    Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
-        ' populates the picture boxes with icons
-        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
-        Dim intI As Integer = intCurrSample
-        'picOption1.BackgroundImage = currSampleImage
-        Dim picBox1 = New TaskItem()
-        Dim picBox2 = New TaskItem()
-        Dim picBox3 = New TaskItem()
-        Dim picBox4 = New TaskItem()
-        ReDim _tskAllTaskItems(3)
-        'add task items to array:
-        _tskAllTaskItems(0) = picBox1
-        _tskAllTaskItems(1) = picBox2
-        _tskAllTaskItems(2) = picBox3
-        _tskAllTaskItems(3) = picBox4
-        'set task item images
-        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
-        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
-        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
-        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
-
-    End Sub
-
-    Private Sub LongCreateTaskItems(ByVal intCurrSample As Integer)
-        ' populates the picture boxes with icons
-        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
-        Dim intI As Integer = intCurrSample
-        'picOption1.BackgroundImage = currSampleImage
-        Dim picBox1 = New TaskItem()
-        Dim picBox2 = New TaskItem()
-        Dim picBox3 = New TaskItem()
-        Dim picBox4 = New TaskItem()
-        ReDim _tskAllTaskItems(3)
-        'add task items to array:
-        _tskAllTaskItems(0) = picBox1
-        _tskAllTaskItems(1) = picBox2
-        _tskAllTaskItems(2) = picBox3
-        _tskAllTaskItems(3) = picBox4
-        'set task item images
-        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
-        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
-        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
-        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
-
-    End Sub
-
-    Private Sub SetIconsByTaskItem()
-        'sets background image of pic boxes by retrieving images from current task items
-        'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
-        picOption1.BackgroundImage = _tskAllTaskItems(0).GetTaskImage()
-        picOption2.BackgroundImage = _tskAllTaskItems(1).GetTaskImage()
-        picOption3.BackgroundImage = _tskAllTaskItems(2).GetTaskImage()
-        picOption4.BackgroundImage = _tskAllTaskItems(3).GetTaskImage()
-
-    End Sub
-
+    'visual events:
     Private Sub picOption1_MouseHover(sender As Object, e As EventArgs) Handles picOption1.MouseHover
+        'adds 3D indented effect when mouse hovers over icon
         picOption1.BorderStyle = BorderStyle.Fixed3D
     End Sub
 
     Private Sub picOption1_MouseLeave(sender As Object, e As EventArgs) Handles picOption1.MouseLeave
+        'removes the 3D indented border effect when mouse leaves icon
         picOption1.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub picOption2_MouseHover(sender As Object, e As EventArgs) Handles picOption2.MouseHover
+        'adds 3D indented effect when mouse hovers over icon
         picOption2.BorderStyle = BorderStyle.Fixed3D
     End Sub
 
     Private Sub picOption2_MouseLeave(sender As Object, e As EventArgs) Handles picOption2.MouseLeave
+        'removes the 3D indented border effect when mouse leaves icon
         picOption2.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub picOption3_MouseHover(sender As Object, e As EventArgs) Handles picOption3.MouseHover
+        'adds 3D indented effect when mouse hovers over icon
         picOption3.BorderStyle = BorderStyle.Fixed3D
     End Sub
 
     Private Sub picOption3_MouseLeave(sender As Object, e As EventArgs) Handles picOption3.MouseLeave
+        'removes the 3D indented border effect when mouse leaves icon
         picOption3.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub picOption4_MouseHover(sender As Object, e As EventArgs) Handles picOption4.MouseHover
+        'adds 3D indented effect when mouse hovers over icon
         picOption4.BorderStyle = BorderStyle.Fixed3D
     End Sub
 
     Private Sub picOption4_MouseLeave(sender As Object, e As EventArgs) Handles picOption4.MouseLeave
+        'removes the 3D indented border effect when mouse leaves icon
         picOption4.BorderStyle = BorderStyle.None
     End Sub
 
