@@ -276,10 +276,11 @@ Public Class frmMatchUp
 
     End Sub
 
+    Dim usedNums() As Integer
     Private Sub SetIconsByTaskItem()
         'sets background image of pic boxes by retrieving images from current task items
         'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
-        Dim usedNums() As Integer
+
         Dim intNewNum As Integer
         Dim intTally As Integer = 0
         Dim nextNum As Integer = 0
@@ -321,9 +322,10 @@ Public Class frmMatchUp
         grpIcons.Visible = True
     End Sub
 
-    Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer) As Boolean
+    Private Function DetermineCorrect(ByVal optionIndex As Integer, ByRef intWordIndex As Integer,
+                                      ByVal taskIndexArray() As Integer) As Boolean
         'determines if selected icon is the correct choice (a match to the sample)
-        Return _tskAllTaskItems(optionIndex).GetTaskIndex() = intWordIndex
+        Return _tskAllTaskItems(taskIndexArray(optionIndex)).GetTaskIndex() = intWordIndex
     End Function
 
     Private Sub AddToScore()
@@ -438,7 +440,7 @@ Public Class frmMatchUp
 
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
         ' decides of is correct icon & moves on to next task or ends
-        If DetermineCorrect(0, intCurrWordSampleIndex) Then
+        If DetermineCorrect(0, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
@@ -466,7 +468,7 @@ Public Class frmMatchUp
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
         ' decides of is correct icon & moves on to next task or ends
-        If DetermineCorrect(1, intCurrWordSampleIndex) Then
+        If DetermineCorrect(1, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
@@ -494,7 +496,7 @@ Public Class frmMatchUp
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
         ' decides of is correct icon & moves on to next task or ends
-        If DetermineCorrect(2, intCurrWordSampleIndex) Then
+        If DetermineCorrect(2, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
@@ -523,7 +525,7 @@ Public Class frmMatchUp
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
         ' decides of is correct icon & moves on to next task or ends
-        If DetermineCorrect(3, intCurrWordSampleIndex) Then
+        If DetermineCorrect(3, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
             ShowCheck()
             AddToScore()
