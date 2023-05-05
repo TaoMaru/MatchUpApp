@@ -279,10 +279,33 @@ Public Class frmMatchUp
     Private Sub SetIconsByTaskItem()
         'sets background image of pic boxes by retrieving images from current task items
         'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
-        picOption1.BackgroundImage = _tskAllTaskItems(0).GetTaskImage()
-        picOption2.BackgroundImage = _tskAllTaskItems(1).GetTaskImage()
-        picOption3.BackgroundImage = _tskAllTaskItems(2).GetTaskImage()
-        picOption4.BackgroundImage = _tskAllTaskItems(3).GetTaskImage()
+        Dim usedNums() As Integer
+        Dim intNewNum As Integer
+        Dim intTally As Integer = 0
+        Dim nextNum As Integer = 0
+        Dim done As Boolean = False
+        ReDim usedNums(0)
+        'usedNums(0) = 2
+        While Not done
+            intNewNum = Int(Rnd() * 4)
+            'MsgBox(intNewNum.ToString())
+            If Not usedNums.Contains(intNewNum) Then
+                'MsgBox(intNewNum.ToString() & "is not in there!")
+                ReDim Preserve usedNums(nextNum)
+                usedNums(nextNum) = intNewNum
+                nextNum += 1
+                intTally += 1
+                If usedNums.Length() = 4 Then
+                    done = True
+                End If
+            End If
+        End While
+        'use random index order to populate picBoxes with task images:
+        ' must set index to indicate correct icon choices with this random
+        picOption1.BackgroundImage = _tskAllTaskItems(usedNums(0)).GetTaskImage()
+        picOption2.BackgroundImage = _tskAllTaskItems(usedNums(1)).GetTaskImage()
+        picOption3.BackgroundImage = _tskAllTaskItems(usedNums(2)).GetTaskImage()
+        picOption4.BackgroundImage = _tskAllTaskItems(usedNums(3)).GetTaskImage()
 
     End Sub
 
