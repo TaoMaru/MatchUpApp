@@ -54,6 +54,7 @@ Public Class frmMatchUp
         Catch ex As Exception
             MsgBox("We had trouble reading the file. Please try again.", vbOKOnly, "File Read Error")
             Reset()
+            ResetForm()
         End Try
     End Sub
 
@@ -61,19 +62,32 @@ Public Class frmMatchUp
     Private _strIconsList(9) As String 'Holds icons
     Private Sub CreateIconsList()
         'populates icon file path lists by getting the current directory and combining file names
-        Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
-        Dim iconDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-        _strIconsList(0) = IO.Path.Combine(iconDir, "smallSamplePNGs\bike.png")
-        _strIconsList(1) = IO.Path.Combine(iconDir, "smallSamplePNGs\book.png")
-        _strIconsList(2) = IO.Path.Combine(iconDir, "smallSamplePNGs\car.png")
-        _strIconsList(3) = IO.Path.Combine(iconDir, "smallSamplePNGs\cat.png")
-        _strIconsList(4) = IO.Path.Combine(iconDir, "smallSamplePNGs\clock.png")
-        _strIconsList(5) = IO.Path.Combine(iconDir, "smallSamplePNGs\dog.png")
-        _strIconsList(6) = IO.Path.Combine(iconDir, "smallSamplePNGs\fish.png")
-        _strIconsList(7) = IO.Path.Combine(iconDir, "smallSamplePNGs\house.png")
-        _strIconsList(8) = IO.Path.Combine(iconDir, "smallSamplePNGs\phone.png")
-        _strIconsList(9) = IO.Path.Combine(iconDir, "smallSamplePNGs\tree.png")
-
+        Try
+            Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
+            Dim iconDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
+            _strIconsList(0) = IO.Path.Combine(iconDir, "smallSamplePNGs\bike.png")
+            _strIconsList(1) = IO.Path.Combine(iconDir, "smallSamplePNGs\book.png")
+            _strIconsList(2) = IO.Path.Combine(iconDir, "smallSamplePNGs\car.png")
+            _strIconsList(3) = IO.Path.Combine(iconDir, "smallSamplePNGs\cat.png")
+            _strIconsList(4) = IO.Path.Combine(iconDir, "smallSamplePNGs\clock.png")
+            _strIconsList(5) = IO.Path.Combine(iconDir, "smallSamplePNGs\dog.png")
+            _strIconsList(6) = IO.Path.Combine(iconDir, "smallSamplePNGs\fish.png")
+            _strIconsList(7) = IO.Path.Combine(iconDir, "smallSamplePNGs\house.png")
+            _strIconsList(8) = IO.Path.Combine(iconDir, "smallSamplePNGs\phone.png")
+            _strIconsList(9) = IO.Path.Combine(iconDir, "smallSamplePNGs\tree.png")
+        Catch pathTooLong As IO.PathTooLongException
+            MsgBox("The icon png file paths are too long. Check the file directory and try again.",
+                                                vbOKOnly, "Icon PNG File Path Too Long!")
+            ResetForm()
+        Catch argEx As ArgumentException
+            MsgBox("An error occurred while trying to find the icon png directory. Please try again.",
+                                                vbOKOnly, "Error Retrieving Icon PNG Directory!")
+            ResetForm()
+        Catch ex As Exception
+            MsgBox("An error occurred while loading the sample icon pngs. Please try again.",
+                                                vbOKOnly, "Error Loading Sample Icons!")
+            ResetForm()
+        End Try
     End Sub
 
     'General procedures:
@@ -85,6 +99,7 @@ Public Class frmMatchUp
         HideCheck()
         btnStart.Visible = True
         btnStart.Enabled = False
+        btnExit.Visible = True
         lblSampleWord.Visible = False
         grpTaskSize.Visible = False
         HideTotalCorrect() 'hide end label
@@ -185,53 +200,79 @@ Public Class frmMatchUp
 
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a short (5 item) task
-        Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
-        Dim intI As Integer = intCurrSample
-        'picOption1.BackgroundImage = currSampleImage
-        Dim picBox1 = New TaskItem()
-        Dim picBox2 = New TaskItem()
-        Dim picBox3 = New TaskItem()
-        Dim picBox4 = New TaskItem()
-        ReDim _tskAllTaskItems(3)
-        'add task items to array:
-        _tskAllTaskItems(0) = picBox1
-        _tskAllTaskItems(1) = picBox2
-        _tskAllTaskItems(2) = picBox3
-        _tskAllTaskItems(3) = picBox4
-        'set task item images
-        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
-        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
-        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
-        currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
-        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
+        Try
+            Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
+            Dim intI As Integer = intCurrSample
+            'picOption1.BackgroundImage = currSampleImage
+            Dim picBox1 = New TaskItem()
+            Dim picBox2 = New TaskItem()
+            Dim picBox3 = New TaskItem()
+            Dim picBox4 = New TaskItem()
+            ReDim _tskAllTaskItems(3)
+            'add task items to array:
+            _tskAllTaskItems(0) = picBox1
+            _tskAllTaskItems(1) = picBox2
+            _tskAllTaskItems(2) = picBox3
+            _tskAllTaskItems(3) = picBox4
+            'set task item images
+            picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
+            currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
+            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
+            currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
+            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
+            currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
+            picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
+        Catch fileNotFound As IO.FileNotFoundException
+            MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
+            ResetForm()
+        Catch outOfMem As OutOfMemoryException
+            MsgBox("There may not be enough memory to load the icons. Please try again.", vbOKOnly,
+                                                            "Not Enough Memory to Load Icons")
+            ResetForm()
+        Catch ex As Exception
+            MsgBox("An error occurred when loading the icons on screen. Please try again.", vbOKOnly,
+                                                            "Could Not Load Icons On Screen")
+            ResetForm()
+        End Try
 
     End Sub
 
     Private Sub LongCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a long (10 item) task
-        Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
-        Dim intI As Integer = intCurrSample
-        'picOption1.BackgroundImage = currSampleImage
-        Dim picBox1 = New TaskItem()
-        Dim picBox2 = New TaskItem()
-        Dim picBox3 = New TaskItem()
-        Dim picBox4 = New TaskItem()
-        ReDim _tskAllTaskItems(3)
-        'add task items to array:
-        _tskAllTaskItems(0) = picBox1
-        _tskAllTaskItems(1) = picBox2
-        _tskAllTaskItems(2) = picBox3
-        _tskAllTaskItems(3) = picBox4
-        'set task item images
-        picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
-        picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
-        picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
-        currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
-        picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+        Try
+            Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+            Dim intI As Integer = intCurrSample
+            'picOption1.BackgroundImage = currSampleImage
+            Dim picBox1 = New TaskItem()
+            Dim picBox2 = New TaskItem()
+            Dim picBox3 = New TaskItem()
+            Dim picBox4 = New TaskItem()
+            ReDim _tskAllTaskItems(3)
+            'add task items to array:
+            _tskAllTaskItems(0) = picBox1
+            _tskAllTaskItems(1) = picBox2
+            _tskAllTaskItems(2) = picBox3
+            _tskAllTaskItems(3) = picBox4
+            'set task item images
+            picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
+            currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
+            currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
+            currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+            picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+        Catch fileNotFound As IO.FileNotFoundException
+            MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
+            ResetForm()
+        Catch outOfMem As OutOfMemoryException
+            MsgBox("There may not be enough memory to load the icons. Please try again.", vbOKOnly,
+                                                            "Not Enough Memory to Load Icons")
+            ResetForm()
+        Catch ex As Exception
+            MsgBox("An error occurred when loading the icons on screen. Please try again.", vbOKOnly,
+                                                            "Could Not Load Icons On Screen")
+            ResetForm()
+        End Try
 
     End Sub
 
