@@ -80,14 +80,24 @@ Public Class frmMatchUp
     Private Sub ResetForm()
         'resets form to load state: hide btns and containers that are used in match tasks
         btnOK.Visible = False
-        grpIcons.Visible = False
-        picCorrect.Visible = False
+        btnNew.Visible = False
+        HideIcons()
+        HideCheck()
+        btnStart.Visible = True
         btnStart.Enabled = False
         lblSampleWord.Visible = False
         grpTaskSize.Visible = False
-        HideTotalCorrect()
+        HideTotalCorrect() 'hide end label
         ShowLogo() 'show the app logo
+        lblHeading.Visible = True
+        lblInstructions.Visible = True
+        cboMode.Text = "Select MatchUp Mode:"
+        cboMode.Visible = True
         lblTimer.Text = 0
+        'reset task variables to 0
+        intTotalCorrect = 0
+        intCurrWordIndex = 0
+        intCurrWordSampleIndex = 0
     End Sub
 
     'timer:
@@ -115,6 +125,11 @@ Public Class frmMatchUp
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles btnExit.Click
         'closes program
         Close()
+    End Sub
+
+    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
+        'resets form and all matching game options
+        ResetForm()
     End Sub
 
     Private Sub cboMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboMode.SelectedIndexChanged
@@ -270,6 +285,11 @@ Public Class frmMatchUp
         lblTotalCorrect.Text = strTotalCorrectMessage
     End Sub
 
+    Private Sub ShowEndOptions()
+        btnExit.Visible = True
+        btnNew.Visible = True
+    End Sub
+
     Private Sub ShowWord(ByVal taskNum As Integer, ByVal wordArray As String())
         'shows next word in the task series
         lblSampleWord.Text = wordArray(taskNum)
@@ -367,8 +387,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             If intCurrWordIndex < _strIconsList.Length() Then
@@ -376,8 +395,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         End If
     End Sub
@@ -397,8 +415,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             If intCurrWordIndex < _strIconsList.Length() Then
@@ -406,8 +423,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         End If
     End Sub
@@ -427,8 +443,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             If intCurrWordIndex < _strIconsList.Length() Then
@@ -436,8 +451,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         End If
 
@@ -458,8 +472,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             If intCurrWordIndex < _strIconsList.Length() Then
@@ -467,8 +480,7 @@ Public Class frmMatchUp
             Else
                 UpdateTotalCorrectLabel()
                 ShowTotalCorrect()
-                btnExit.Visible = True
-                btnExit.Enabled = True
+                ShowEndOptions()
             End If
         End If
 
@@ -515,6 +527,5 @@ Public Class frmMatchUp
         'removes the 3D indented border effect when mouse leaves icon
         picOption4.BorderStyle = BorderStyle.None
     End Sub
-
 
 End Class

@@ -44,6 +44,7 @@ Partial Class frmMatchUp
         Me.lblTotalCorrect = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblTimer = New System.Windows.Forms.Label()
+        Me.btnNew = New System.Windows.Forms.Button()
         Me.grpTaskSize.SuspendLayout()
         Me.grpIcons.SuspendLayout()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -259,7 +260,7 @@ Partial Class frmMatchUp
         '
         'lblTotalCorrect
         '
-        Me.lblTotalCorrect.Font = New System.Drawing.Font("Rockwell", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalCorrect.Font = New System.Drawing.Font("Rockwell", 26.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTotalCorrect.Location = New System.Drawing.Point(13, 275)
         Me.lblTotalCorrect.Name = "lblTotalCorrect"
         Me.lblTotalCorrect.Size = New System.Drawing.Size(1065, 232)
@@ -281,12 +282,25 @@ Partial Class frmMatchUp
         Me.lblTimer.Text = "Label1"
         Me.lblTimer.Visible = False
         '
+        'btnNew
+        '
+        Me.btnNew.BackColor = System.Drawing.Color.LightGoldenrodYellow
+        Me.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNew.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNew.Location = New System.Drawing.Point(349, 585)
+        Me.btnNew.Name = "btnNew"
+        Me.btnNew.Size = New System.Drawing.Size(152, 63)
+        Me.btnNew.TabIndex = 14
+        Me.btnNew.Text = "New"
+        Me.btnNew.UseVisualStyleBackColor = False
+        '
         'frmMatchUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.btnNew)
         Me.Controls.Add(Me.lblTimer)
         Me.Controls.Add(Me.lblTotalCorrect)
         Me.Controls.Add(Me.btnStart)
@@ -339,4 +353,5 @@ Partial Class frmMatchUp
     Friend WithEvents lblTotalCorrect As Label
     Friend WithEvents Timer1 As Timer
     Friend WithEvents lblTimer As Label
+    Friend WithEvents btnNew As Button
 End Class
