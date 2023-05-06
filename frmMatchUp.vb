@@ -474,24 +474,29 @@ Public Class frmMatchUp
         HideIcons()
         btnNext.Visible = True
     End Sub
+
+    Private Sub EndSeries()
+        UpdateTotalCorrectLabel()
+        ShowTotalCorrect()
+        ShowEndOptions()
+    End Sub
+
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
-        'gets next word in series
+        'determines current position in task series, shows next word or end results when done
         HideCheck()
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
+            'Playing printed mode short task
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
             Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
+                EndSeries()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            'Playing printed mode long task
             If intCurrWordIndex < _strIconsList.Length() Then
                 NextLongTask(intCurrWordIndex)
             Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
+                EndSeries()
             End If
         End If
     End Sub
@@ -507,7 +512,6 @@ Public Class frmMatchUp
         End If
         WaitForNext()
         intCurrWordIndex += 1
-
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
@@ -520,7 +524,6 @@ Public Class frmMatchUp
         End If
         WaitForNext()
         intCurrWordIndex += 1
-
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
@@ -533,7 +536,6 @@ Public Class frmMatchUp
         End If
         WaitForNext()
         intCurrWordIndex += 1
-
     End Sub
 
     Private Sub picOption4_Click(sender As Object, e As EventArgs) Handles picOption4.Click
@@ -546,8 +548,6 @@ Public Class frmMatchUp
         End If
         WaitForNext()
         intCurrWordIndex += 1
-
-
     End Sub
 
 
