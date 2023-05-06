@@ -138,5 +138,8 @@
   <ItemGroup>
     <None Include="bgPNGs\check-svgrepo-com.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bgPNGs\mind-map-spin.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

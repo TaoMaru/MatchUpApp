@@ -72,7 +72,7 @@ Partial Class frmSplash
         'picLogoMind
         '
         Me.picLogoMind.BackColor = System.Drawing.Color.Black
-        Me.picLogoMind.Image = Global.MatchUpApp.My.Resources.Resources.mind_map_svgrepo_com
+        Me.picLogoMind.Image = Global.MatchUpApp.My.Resources.Resources.mind_map_spin
         Me.picLogoMind.Location = New System.Drawing.Point(86, 55)
         Me.picLogoMind.Name = "picLogoMind"
         Me.picLogoMind.Size = New System.Drawing.Size(97, 80)
