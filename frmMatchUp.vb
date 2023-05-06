@@ -465,6 +465,8 @@ Public Class frmMatchUp
         grpIcons.Visible = False
     End Sub
 
+    'Icon selection: 
+    'Add a next btn to replace the broken timer function.
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
         ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(0, intCurrWordSampleIndex, usedNums) Then
