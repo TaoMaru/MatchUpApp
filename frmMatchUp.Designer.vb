@@ -261,7 +261,7 @@ Partial Class frmMatchUp
         'lblTotalCorrect
         '
         Me.lblTotalCorrect.Font = New System.Drawing.Font("Rockwell", 26.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotalCorrect.Location = New System.Drawing.Point(13, 275)
+        Me.lblTotalCorrect.Location = New System.Drawing.Point(13, 185)
         Me.lblTotalCorrect.Name = "lblTotalCorrect"
         Me.lblTotalCorrect.Size = New System.Drawing.Size(1065, 232)
         Me.lblTotalCorrect.TabIndex = 12
@@ -300,6 +300,7 @@ Partial Class frmMatchUp
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.picCorrect)
         Me.Controls.Add(Me.btnNew)
         Me.Controls.Add(Me.lblTimer)
         Me.Controls.Add(Me.lblTotalCorrect)
@@ -307,7 +308,6 @@ Partial Class frmMatchUp
         Me.Controls.Add(Me.lblHeading)
         Me.Controls.Add(Me.btnExit)
         Me.Controls.Add(Me.btnOK)
-        Me.Controls.Add(Me.picCorrect)
         Me.Controls.Add(Me.lblSampleWord)
         Me.Controls.Add(Me.lblInstructions)
         Me.Controls.Add(Me.cboMode)

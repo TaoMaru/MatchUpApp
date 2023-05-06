@@ -90,6 +90,24 @@ Public Class frmMatchUp
         End Try
     End Sub
 
+    Private picOp1Location = New Point(120, 300)
+    Private picOp2Location = New Point(260, 300)
+    Private picOp3Location = New Point(470, 300)
+    Private picOp4Location = New Point(640, 300)
+
+    Private Sub ChangeCheckLocation(ByVal optionNum As Integer)
+        'moves check mark location to the location of the corresponding picOption
+        If optionNum = 1 Then
+            picCorrect.Location = picOp1Location
+        ElseIf optionNum = 2 Then
+            picCorrect.Location = picOp2Location
+        ElseIf optionNum = 3 Then
+            picCorrect.Location = picOp3Location
+        Else
+            picCorrect.Location = picOp4Location
+        End If
+    End Sub
+
     'General procedures:
     Private Sub ResetForm()
         'resets form to load state: hide btns and containers that are used in match tasks
@@ -442,6 +460,7 @@ Public Class frmMatchUp
         ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(0, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
+            ChangeCheckLocation(1)
             ShowCheck()
             AddToScore()
         End If
@@ -470,6 +489,7 @@ Public Class frmMatchUp
         ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(1, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
+            ChangeCheckLocation(2)
             ShowCheck()
             AddToScore()
         End If
@@ -498,6 +518,7 @@ Public Class frmMatchUp
         ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(2, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
+            ChangeCheckLocation(3)
             ShowCheck()
             AddToScore()
         End If
@@ -527,6 +548,7 @@ Public Class frmMatchUp
         ' decides of is correct icon & moves on to next task or ends
         If DetermineCorrect(3, intCurrWordSampleIndex, usedNums) Then
             'answer was correct, show check mark, increment score
+            ChangeCheckLocation(4)
             ShowCheck()
             AddToScore()
         End If
