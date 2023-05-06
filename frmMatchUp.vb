@@ -90,10 +90,11 @@ Public Class frmMatchUp
         End Try
     End Sub
 
-    Private picOp1Location = New Point(120, 300)
-    Private picOp2Location = New Point(260, 300)
-    Private picOp3Location = New Point(470, 300)
-    Private picOp4Location = New Point(640, 300)
+    'check mark location settings:
+    Private picOp1Location = New Point(60, 300) ' position at picOption 1
+    Private picOp2Location = New Point(260, 300) ' position at picOption 2
+    Private picOp3Location = New Point(470, 300) ' position at picOption 3
+    Private picOp4Location = New Point(640, 300) ' position at picOption 4
 
     Private Sub ChangeCheckLocation(ByVal optionNum As Integer)
         'moves check mark location to the location of the corresponding picOption
@@ -233,13 +234,13 @@ Public Class frmMatchUp
             _tskAllTaskItems(2) = picBox3
             _tskAllTaskItems(3) = picBox4
             'set task item images
-            picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
+            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
             currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
             picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
             currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
             picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
             currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
-            picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
+            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
             ResetForm()
@@ -272,13 +273,13 @@ Public Class frmMatchUp
             _tskAllTaskItems(2) = picBox3
             _tskAllTaskItems(3) = picBox4
             'set task item images
-            picBox1.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
+            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
             currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
             picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
             currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
             picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
             currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
-            picBox4.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
             ResetForm()
