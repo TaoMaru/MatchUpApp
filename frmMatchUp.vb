@@ -125,7 +125,7 @@ Public Class frmMatchUp
         ShowLogo() 'show the app logo
         lblHeading.Visible = True
         lblInstructions.Visible = True
-        cboMode.Text = "Select MatchUp Mode:"
+        cboMode.Text = "Select Match Up Mode:"
         cboMode.Visible = True
         lblTimer.Text = 0
         'reset task variables to 0
@@ -191,8 +191,16 @@ Public Class frmMatchUp
         'determine game type:
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             PlayShortTask(intCurrWordIndex)
-        Else
+        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             PlayLongTask(intCurrWordIndex)
+        ElseIf (cboMode.SelectedIndex = 1 And rdoShort.Checked = True) Or
+                (cboMode.SelectedIndex = 1 And rdoLong.Checked = True) Then
+            MsgBox("This Match Up Mode is not avaiable yet. Try the Printed Word Mode and check back soon!",
+                                vbOKOnly, "Spoken Word Mode Unavailable")
+            ResetForm()
+        Else
+            MsgBox("An error occurred. Please try again!", vbOKOnly, "Game Start Error")
+            ResetForm()
         End If
     End Sub
 
@@ -295,11 +303,11 @@ Public Class frmMatchUp
 
     End Sub
 
-    Dim usedNums() As Integer
+    Dim usedNums() As Integer ' holds the randomized indices of task items
     Private Sub SetIconsByTaskItem()
         'sets background image of pic boxes by retrieving images from current task items
-        'can use Rnd() * upperbound to generate random nums between 0 and the upperbound
-
+        'uses Rnd() * upperbound to generate random nums between 0 and the upperbound
+        'uses ReDim to add randomized indices to usedNums array
         Dim intNewNum As Integer
         Dim intTally As Integer = 0
         Dim nextNum As Integer = 0
@@ -321,7 +329,6 @@ Public Class frmMatchUp
             End If
         End While
         'use random index order to populate picBoxes with task images:
-        ' must set index to indicate correct icon choices with this random
         picOption1.BackgroundImage = _tskAllTaskItems(usedNums(0)).GetTaskImage()
         picOption2.BackgroundImage = _tskAllTaskItems(usedNums(1)).GetTaskImage()
         picOption3.BackgroundImage = _tskAllTaskItems(usedNums(2)).GetTaskImage()
@@ -338,6 +345,7 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub ShowIconOptions()
+        'shows the icon pic boxes via grpIcons
         grpIcons.Visible = True
     End Sub
 
@@ -353,14 +361,17 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub HideTotalCorrect()
+        'hides the total correct label
         lblTotalCorrect.Visible = False
     End Sub
 
     Private Sub ShowTotalCorrect()
+        'shows the total correct label
         lblTotalCorrect.Visible = True
     End Sub
 
     Private Sub UpdateTotalCorrectLabel()
+        ' edits the end screen message to include the total num correct selctions out of the series total
         Dim strTotalCorrectMessage = "Nice! {0}/{1}"
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
@@ -371,6 +382,7 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub ShowEndOptions()
+        'shows the exit and new btns after a task series ends
         btnExit.Visible = True
         btnNew.Visible = True
     End Sub
@@ -430,6 +442,7 @@ Public Class frmMatchUp
     End Function
 
     Private Sub GetShortIconList()
+        'creates a short icon list from original icons list
         Dim intIndex As Integer
         ReDim _strShortIconList(4)
         For intIndex = 0 To _strShortIconList.Length() - 1
@@ -448,13 +461,8 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub HideIcons()
-        'shows icon group
-        grpIcons.Visible = False
-    End Sub
-
-    Private Sub ShowIcons()
         'hides icon group
-        grpIcons.Visible = True
+        grpIcons.Visible = False
     End Sub
 
     Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
