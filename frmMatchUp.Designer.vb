@@ -45,6 +45,7 @@ Partial Class frmMatchUp
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblTimer = New System.Windows.Forms.Label()
         Me.btnNew = New System.Windows.Forms.Button()
+        Me.btnNext = New System.Windows.Forms.Button()
         Me.grpTaskSize.SuspendLayout()
         Me.grpIcons.SuspendLayout()
         CType(Me.picOption4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -294,12 +295,24 @@ Partial Class frmMatchUp
         Me.btnNew.Text = "New"
         Me.btnNew.UseVisualStyleBackColor = False
         '
+        'btnNext
+        '
+        Me.btnNext.BackColor = System.Drawing.Color.LightGoldenrodYellow
+        Me.btnNext.Font = New System.Drawing.Font("Rockwell", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNext.Location = New System.Drawing.Point(478, 161)
+        Me.btnNext.Name = "btnNext"
+        Me.btnNext.Size = New System.Drawing.Size(134, 91)
+        Me.btnNext.TabIndex = 15
+        Me.btnNext.Text = "Next"
+        Me.btnNext.UseVisualStyleBackColor = False
+        '
         'frmMatchUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.PaleTurquoise
         Me.ClientSize = New System.Drawing.Size(1090, 660)
+        Me.Controls.Add(Me.btnNext)
         Me.Controls.Add(Me.picCorrect)
         Me.Controls.Add(Me.btnNew)
         Me.Controls.Add(Me.lblTimer)
@@ -354,4 +367,5 @@ Partial Class frmMatchUp
     Friend WithEvents Timer1 As Timer
     Friend WithEvents lblTimer As Label
     Friend WithEvents btnNew As Button
+    Friend WithEvents btnNext As Button
 End Class

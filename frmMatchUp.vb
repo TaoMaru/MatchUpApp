@@ -119,6 +119,7 @@ Public Class frmMatchUp
         btnStart.Visible = True
         btnStart.Enabled = False
         btnExit.Visible = True
+        btnNext.Visible = False
         lblSampleWord.Visible = False
         grpTaskSize.Visible = False
         HideTotalCorrect() 'hide end label
@@ -385,6 +386,7 @@ Public Class frmMatchUp
         'shows the exit and new btns after a task series ends
         btnExit.Visible = True
         btnNew.Visible = True
+        btnNext.Visible = False
     End Sub
 
     Private Sub ShowWord(ByVal taskNum As Integer, ByVal wordArray As String())
@@ -410,6 +412,7 @@ Public Class frmMatchUp
 
     Private Sub NextShortTask(ByRef currWordIndex As Integer)
         'plays a word task: displays word, displays icon options, gets icon selection
+        btnNext.Visible = False
         ShowWord(currWordIndex, strShortList) 'use short list to grab target word
         intCurrWordSampleIndex = currWordIndex 'update current target word index
         ShortCreateTaskItems(currWordIndex) ' create task items
@@ -421,6 +424,7 @@ Public Class frmMatchUp
 
     Private Sub NextLongTask(ByRef currWordIndex As Integer)
         'plays a word task in long task: displays word, displays icon option, gets icon selction
+        btnNext.Visible = False
         ShowWord(currWordIndex, _strWordList) 'use long list to grab target word
         intCurrWordSampleIndex = currWordIndex 'update current target word index
         LongCreateTaskItems(currWordIndex) 'create task items
@@ -465,18 +469,14 @@ Public Class frmMatchUp
         grpIcons.Visible = False
     End Sub
 
-    'Icon selection: 
-    'Add a next btn to replace the broken timer function.
-    Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
-        ' decides of is correct icon & moves on to next task or ends
-        If DetermineCorrect(0, intCurrWordSampleIndex, usedNums) Then
-            'answer was correct, show check mark, increment score
-            ChangeCheckLocation(1)
-            ShowCheck()
-            AddToScore()
-        End If
+    Private Sub WaitForNext()
+        ' hides icons and next word
         HideIcons()
-        intCurrWordIndex += 1
+        btnNext.Visible = True
+    End Sub
+    Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
+        'gets next word in series
+        HideCheck()
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortTask(intCurrWordIndex)
@@ -494,6 +494,20 @@ Public Class frmMatchUp
                 ShowEndOptions()
             End If
         End If
+    End Sub
+
+    'Icon selection: 
+    Private Sub picOption1_Click(sender As Object, e As EventArgs) Handles picOption1.Click
+        ' decides of is correct icon & moves on to next task or ends
+        If DetermineCorrect(0, intCurrWordSampleIndex, usedNums) Then
+            'answer was correct, show check mark, increment score
+            ChangeCheckLocation(1)
+            ShowCheck()
+            AddToScore()
+        End If
+        WaitForNext()
+        intCurrWordIndex += 1
+
     End Sub
 
     Private Sub picOption2_Click(sender As Object, e As EventArgs) Handles picOption2.Click
@@ -504,25 +518,9 @@ Public Class frmMatchUp
             ShowCheck()
             AddToScore()
         End If
-        HideIcons()
+        WaitForNext()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            If intCurrWordIndex < _strShortIconList.Length() Then
-                NextShortTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            If intCurrWordIndex < _strIconsList.Length() Then
-                NextLongTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        End If
+
     End Sub
 
     Private Sub picOption3_Click(sender As Object, e As EventArgs) Handles picOption3.Click
@@ -533,25 +531,8 @@ Public Class frmMatchUp
             ShowCheck()
             AddToScore()
         End If
-        HideIcons()
+        WaitForNext()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            If intCurrWordIndex < _strShortIconList.Length() Then
-                NextShortTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            If intCurrWordIndex < _strIconsList.Length() Then
-                NextLongTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        End If
 
     End Sub
 
@@ -563,25 +544,9 @@ Public Class frmMatchUp
             ShowCheck()
             AddToScore()
         End If
-        HideIcons()
+        WaitForNext()
         intCurrWordIndex += 1
-        If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            If intCurrWordIndex < _strShortIconList.Length() Then
-                NextShortTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            If intCurrWordIndex < _strIconsList.Length() Then
-                NextLongTask(intCurrWordIndex)
-            Else
-                UpdateTotalCorrectLabel()
-                ShowTotalCorrect()
-                ShowEndOptions()
-            End If
-        End If
+
 
     End Sub
 
