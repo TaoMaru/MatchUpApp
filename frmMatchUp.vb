@@ -23,11 +23,7 @@ Public Class frmMatchUp
 
     'program variables:
     Private _strWordList(9) As String 'holds target words 
-    Private Const _cintShortTask As Integer = 5 'length of a short task, 5 words
-    Private Const _cintLongTask As Integer = 10 'length of a long task, 10 words
     Private intCurrWordSampleIndex As Integer 'the index of current word displayed
-    Private readyForNext As Boolean = False
-    Private _correct As Boolean()
     Private _tskAllTaskItems As TaskItem() ' holds task items for short or long tasks
     Private _strShortIconList As String() 'holds icon paths as string in short match task
     Private intTotalCorrect As Integer = 0 'the total number correct matches
@@ -40,8 +36,6 @@ Public Class frmMatchUp
         Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
         'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
         Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
-        'MsgBox(currDir, vbOKOnly, "currdir")
-        'MsgBox(filePath, vbOKOnly, "path")
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 
@@ -128,20 +122,10 @@ Public Class frmMatchUp
         lblInstructions.Visible = True
         cboMode.Text = "Select Match Up Mode:"
         cboMode.Visible = True
-        lblTimer.Text = 0
-        'reset task variables to 0
+        'reset task variables to 0:
         intTotalCorrect = 0
         intCurrWordIndex = 0
         intCurrWordSampleIndex = 0
-    End Sub
-
-    'timer:
-    Private intTimeKeeper As Integer = 0
-    Private readyToShow As Boolean = False
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        lblTimer.Text += 1 'track timer: increments every .5 sec
-        intTimeKeeper = Convert.ToInt32(lblTimer.Text)
-
     End Sub
 
     Private Sub HideLogo()
@@ -185,17 +169,17 @@ Public Class frmMatchUp
         btnExit.Visible = False
         btnOK.Visible = True
         HideLogo()
-        'temp variables:
-        Dim intNumTasks As Integer = 5
-        Dim intCurrTask As Integer
 
         'determine game type:
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
+            ' short printed word task
             PlayShortTask(intCurrWordIndex)
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            'long printed word task
             PlayLongTask(intCurrWordIndex)
         ElseIf (cboMode.SelectedIndex = 1 And rdoShort.Checked = True) Or
                 (cboMode.SelectedIndex = 1 And rdoLong.Checked = True) Then
+            'short or long spoken word task
             MsgBox("This Match Up Mode is not avaiable yet. Try the Printed Word Mode and check back soon!",
                                 vbOKOnly, "Spoken Word Mode Unavailable")
             ResetForm()
@@ -216,7 +200,7 @@ Public Class frmMatchUp
             taskImage = tImage
             intIndex = intTIndex
         End Sub
-
+        'task obj methods:
         Public Function GetTaskImage()
             Return taskImage
         End Function
@@ -309,17 +293,15 @@ Public Class frmMatchUp
         'sets background image of pic boxes by retrieving images from current task items
         'uses Rnd() * upperbound to generate random nums between 0 and the upperbound
         'uses ReDim to add randomized indices to usedNums array
-        Dim intNewNum As Integer
-        Dim intTally As Integer = 0
-        Dim nextNum As Integer = 0
-        Dim done As Boolean = False
+        Dim intNewNum As Integer 'random generated number
+        Dim intTally As Integer = 0 'number of nums stored so far
+        Dim nextNum As Integer = 0 'starting index for random num array
+        Dim done As Boolean = False 'indicates generating random nums status
         ReDim usedNums(0)
-        'usedNums(0) = 2
+        'generate random nums to be used as indices
         While Not done
             intNewNum = Int(Rnd() * 4)
-            'MsgBox(intNewNum.ToString())
             If Not usedNums.Contains(intNewNum) Then
-                'MsgBox(intNewNum.ToString() & "is not in there!")
                 ReDim Preserve usedNums(nextNum)
                 usedNums(nextNum) = intNewNum
                 nextNum += 1
@@ -476,6 +458,7 @@ Public Class frmMatchUp
     End Sub
 
     Private Sub EndSeries()
+        'shows the "end screen" for tasks: final score updated & displayed, new & exit btns displayed
         UpdateTotalCorrectLabel()
         ShowTotalCorrect()
         ShowEndOptions()
