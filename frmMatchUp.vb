@@ -28,6 +28,7 @@ Public Class frmMatchUp
     Private _strShortIconList As String() 'holds icon paths as string in short match task
     Private intTotalCorrect As Integer = 0 'the total number correct matches
     Private intCurrWordIndex As Integer = 0 'the index of the current target word
+    Private _strAudioList(9) As String ' holds target word audio
 
     'sample words & file I/O:
     Private Sub GetWords()
@@ -50,6 +51,22 @@ Public Class frmMatchUp
             Reset()
             ResetForm()
         End Try
+    End Sub
+
+    Private Sub GetAudio()
+        'get the audio files for the target words
+        Dim audFileNames(1) As String
+        Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
+        Try
+            Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
+            For Each audFile In currDirectory.GetFiles()
+                audFileNames(audFileNames.Length - 1) = audFile.Name
+                ReDim Preserve audFileNames(audFileNames.Length)
+            Next
+        Catch ex As Exception
+            MsgBox("We had trouble accessing the audio directoty. Please try again.", vbOKOnly, "Audio Path Error")
+            Reset()
+            ResetForm()
     End Sub
 
     'picture/icons:
