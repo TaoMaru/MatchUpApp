@@ -60,8 +60,10 @@ Public Class frmMatchUp
         Try
             Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
             Dim audFilePath = IO.Path.Combine(currDirectory, "\sampleAudio")
-            For Each audFile In audFilePath.GetFiles()
+            Dim dir As IO.DirectoryInfo = New IO.DirectoryInfo(audFilePath)
+            For Each audFile In dir.GetFiles()
                 audFileNames(audFileNames.Length - 1) = audFile.Name
+                MsgBox(audFile.Name, vbOKOnly)
                 ReDim Preserve audFileNames(audFileNames.Length)
             Next
         Catch ex As Exception
