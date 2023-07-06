@@ -59,7 +59,8 @@ Public Class frmMatchUp
         Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Try
             Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-            For Each audFile In currDirectory.GetFiles()
+            Dim audFilePath = IO.Path.Combine(currDirectory, "\sampleAudio")
+            For Each audFile In audFilePath.GetFiles()
                 audFileNames(audFileNames.Length - 1) = audFile.Name
                 ReDim Preserve audFileNames(audFileNames.Length)
             Next
@@ -67,6 +68,8 @@ Public Class frmMatchUp
             MsgBox("We had trouble accessing the audio directoty. Please try again.", vbOKOnly, "Audio Path Error")
             Reset()
             ResetForm()
+        End Try
+
     End Sub
 
     'picture/icons:
