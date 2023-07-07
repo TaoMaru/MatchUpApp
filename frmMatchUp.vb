@@ -18,6 +18,7 @@ Public Class frmMatchUp
         MinimizeBox = False
         ResetForm()
         GetWords()
+        GetAudio()
         CreateIconsList()
     End Sub
 
@@ -28,7 +29,7 @@ Public Class frmMatchUp
     Private _strShortIconList As String() 'holds icon paths as string in short match task
     Private intTotalCorrect As Integer = 0 'the total number correct matches
     Private intCurrWordIndex As Integer = 0 'the index of the current target word
-    Private _strAudioList(9) As String ' holds target word audio
+    Private strAudioList(9) As String ' holds target word audio
 
     'sample words & file I/O:
     Private Sub GetWords()
@@ -55,16 +56,17 @@ Public Class frmMatchUp
 
     Private Sub GetAudio()
         'get the audio files for the target words
-        Dim audFileNames(1) As String
+        ReDim strAudioList(1)
         Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Try
             Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-            Dim audFilePath = IO.Path.Combine(currDirectory, "\sampleAudio")
+            Dim audFilePath As String = currDirectory + "\sampleAudio"
             Dim dir As IO.DirectoryInfo = New IO.DirectoryInfo(audFilePath)
+            'grab filenames from audio directory:
             For Each audFile In dir.GetFiles()
-                audFileNames(audFileNames.Length - 1) = audFile.Name
-                MsgBox(audFile.Name, vbOKOnly)
-                ReDim Preserve audFileNames(audFileNames.Length)
+                strAudioList(strAudioList.Length - 1) = audFile.Name
+                'MsgBox(audFile.Name, vbOKOnly)
+                ReDim Preserve strAudioList(strAudioList.Length)
             Next
         Catch ex As Exception
             MsgBox("We had trouble accessing the audio directoty. Please try again.", vbOKOnly, "Audio Path Error")
