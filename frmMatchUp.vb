@@ -9,6 +9,7 @@
 ''          In Spoken Word Mode: the same basic words are presesnted audibly and the same process follows.
 ''          There are two task sizes: short version consists of 5 words. Long version consists of 10 words.
 ''          At the end of the series, the total number of correct words is presented.
+''Update: July 6, 2013 - Spoken Word Mode
 ''          
 Public Class frmMatchUp
     Private Sub frmMatchUp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
