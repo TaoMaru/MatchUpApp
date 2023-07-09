@@ -254,6 +254,11 @@ Public Class frmMatchUp
         End Function
     End Class
 
+    Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
+        'plays the audio for current task's sample word
+        My.Computer.Audio.Play(strAudioList(sampleIndex), AudioPlayMode.Background)
+    End Sub
+
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a short (5 item) task
         Try
@@ -431,6 +436,12 @@ Public Class frmMatchUp
         NextShortTask(intCurrWordIndex) 'play a task: show word, get selection, continue
     End Sub
 
+    Private Sub PlayShortAudioTask(ByRef intCurrWordIndex As Integer)
+        'runs through the first 5 words in the word list with audio
+        strShortList = GetShortList()
+        GetShortIconList()
+    End Sub
+
     Private Sub PlayLongTask(ByRef intCurrWordIndex As Integer)
         'runs through all 10 words in the word list
         NextLongTask(intCurrWordIndex) 'play a task: show word, get selection, continue
@@ -444,6 +455,17 @@ Public Class frmMatchUp
         ShortCreateTaskItems(currWordIndex) ' create task items
         SetIconsByTaskItem() 'populate icons on screen as selection options
         'ready OK btn
+        btnOK.Visible = True
+        btnOK.Enabled = True
+    End Sub
+
+    Private Sub NextShortAudioTask(ByRef currWordIndex As Integer)
+        'plays an audio word task: plays word audio, displays icon options, gets selection
+        btnNext.Visible = False
+        PlaySampleAudio(currWordIndex)
+        intCurrWordSampleIndex = currWordIndex
+        ShortCreateTaskItems(currWordIndex)
+        SetIconsByTaskItem()
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
