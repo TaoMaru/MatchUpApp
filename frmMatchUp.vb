@@ -235,6 +235,25 @@ Public Class frmMatchUp
 
     End Class
 
+    Private Class AudioTaskItem
+        'audio task item holds an audio file & corresponding index during matching tasks
+        Private taskAudio As String
+        Private intIndex As Integer
+        'constructor:
+        Public Sub UpdateAudioTaskItem(tAudio As String, intTIndex As Integer)
+            taskAudio = tAudio
+            intIndex = intTIndex
+        End Sub
+        'methods:
+        Public Function GetTaskAudio()
+            Return taskAudio
+        End Function
+
+        Public Function GetAudioTaskIndex()
+            Return intIndex
+        End Function
+    End Class
+
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a short (5 item) task
         Try
