@@ -202,8 +202,9 @@ Public Class frmMatchUp
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             'long printed word task
             PlayLongTask(intCurrWordIndex)
-        ElseIf (cboMode.SelectedIndex = 1 And rdoShort.Checked = True) Or
-                (cboMode.SelectedIndex = 1 And rdoLong.Checked = True) Then
+        ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
+            PlayShortAudioTask(intCurrWordIndex)
+        ElseIf (cboMode.SelectedIndex = 1 And rdoLong.Checked = True) Then
             'short or long spoken word task
             MsgBox("This Match Up Mode is not avaiable yet. Try the Printed Word Mode and check back soon!",
                                 vbOKOnly, "Spoken Word Mode Unavailable")
