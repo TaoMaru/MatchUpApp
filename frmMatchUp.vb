@@ -62,14 +62,12 @@ Public Class frmMatchUp
         Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Try
             Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-            Dim audFilePath As String = currDirectory + "\sampleAudio"
+            Dim audFilePath As String = currDirectory + "\sampleWAVs"
             Dim dir As IO.DirectoryInfo = New IO.DirectoryInfo(audFilePath)
             'grab filenames from audio directory:
             For Each audFile In dir.GetFiles()
                 strAudioList(strAudioList.Length - 1) = audFile.Name
-                MsgBox(audFile.Name, vbOKOnly)
                 strAudioPathList(strAudioPathList.Length - 1) = audFilePath + "\" + audFile.Name
-                MsgBox(strAudioPathList(strAudioList.Length - 1), vbOKOnly)
                 ReDim Preserve strAudioList(strAudioList.Length)
                 ReDim Preserve strAudioPathList(strAudioPathList.Length)
             Next
@@ -261,8 +259,10 @@ Public Class frmMatchUp
 
     Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
         'plays the audio for current task's sample word
-        My.Computer.Audio.Play(strAudioPathList(sampleIndex), AudioPlayMode.Background)
-        'MsgBox(strAudioList(sampleIndex), vbOKOnly, "current audio file by index")
+        'Dim mp3Sample As New System.IO.MemoryStream(strAudioPathList(sampleIndex + 1))
+
+        My.Computer.Audio.Play(strAudioPathList(sampleIndex + 1), AudioPlayMode.Background)
+        'MsgBox(strAudioPathList(sampleIndex + 1), vbOKOnly, "current audio file by index")
     End Sub
 
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
