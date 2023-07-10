@@ -205,12 +205,11 @@ Public Class frmMatchUp
             'long printed word task
             PlayLongTask(intCurrWordIndex)
         ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
+            'short spoken word task
             PlayShortAudioTask(intCurrWordIndex)
         ElseIf (cboMode.SelectedIndex = 1 And rdoLong.Checked = True) Then
-            'short or long spoken word task
-            MsgBox("This Match Up Mode is not avaiable yet. Try the Printed Word Mode and check back soon!",
-                                vbOKOnly, "Spoken Word Mode Unavailable")
-            ResetForm()
+            'long spoken word task
+            PlayLongAudioTask(intCurrWordIndex)
         Else
             MsgBox("An error occurred. Please try again!", vbOKOnly, "Game Start Error")
             ResetForm()
@@ -394,6 +393,8 @@ Public Class frmMatchUp
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
         ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+        ElseIf cboMode.SelectedIndex = 1 And rdoLong.Checked = True Then
             strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
         End If
         lblTotalCorrect.Text = strTotalCorrectMessage
@@ -434,6 +435,11 @@ Public Class frmMatchUp
         NextLongTask(intCurrWordIndex) 'play a task: show word, get selection, continue
     End Sub
 
+    Private Sub PlayLongAudioTask(ByRef intCurrWordIndex As Integer)
+        'runs through all 10 spoken words in audio/word sample list
+        NextLongAudioTask(intCurrWordIndex)
+    End Sub
+
     Private Sub NextShortTask(ByRef currWordIndex As Integer)
         'plays a word task: displays word, displays icon options, gets icon selection
         btnNext.Visible = False
@@ -449,10 +455,10 @@ Public Class frmMatchUp
     Private Sub NextShortAudioTask(ByRef currWordIndex As Integer)
         'plays an audio word task: plays word audio, displays icon options, gets selection
         btnNext.Visible = False
-        PlaySampleAudio(currWordIndex)
-        intCurrWordSampleIndex = currWordIndex
-        ShortCreateTaskItems(currWordIndex)
-        SetIconsByTaskItem()
+        PlaySampleAudio(currWordIndex) 'use short list to play audio
+        intCurrWordSampleIndex = currWordIndex 'update current target word index
+        ShortCreateTaskItems(currWordIndex) ' create task items
+        SetIconsByTaskItem() ' populate icons on screen
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
@@ -465,6 +471,17 @@ Public Class frmMatchUp
         LongCreateTaskItems(currWordIndex) 'create task items
         SetIconsByTaskItem() 'populate icons on screen as selection options
         'ready OK btn
+        btnOK.Visible = True
+        btnOK.Enabled = True
+    End Sub
+
+    Private Sub NextLongAudioTask(ByRef currWordIndex As Integer)
+        'plays long spoken word task: plays sample word audio, displays icon options, gets selection
+        btnNext.Visible = False
+        PlaySampleAudio(currWordIndex) ' use long word list to play sample audio
+        intCurrWordSampleIndex = currWordIndex 'update current target word index
+        LongCreateTaskItems(currWordIndex) 'create task items
+        SetIconsByTaskItem() 'populate icons on screen
         btnOK.Visible = True
         btnOK.Enabled = True
     End Sub
@@ -538,6 +555,13 @@ Public Class frmMatchUp
             'Playing spoken mode short task
             If intCurrWordIndex < _strShortIconList.Length() Then
                 NextShortAudioTask(intCurrWordIndex)
+            Else
+                EndSeries()
+            End If
+        ElseIf cboMode.SelectedIndex = 1 And rdoLong.Checked = True Then
+            'Playing spoken mode long task
+            If intCurrWordIndex < _strIconsList.Length() Then
+                NextLongAudioTask(intCurrWordIndex)
             Else
                 EndSeries()
             End If
