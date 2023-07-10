@@ -240,10 +240,7 @@ Public Class frmMatchUp
 
     Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
         'plays the audio for current task's sample word
-        'Dim mp3Sample As New System.IO.MemoryStream(strAudioPathList(sampleIndex + 1))
-
         My.Computer.Audio.Play(strAudioPathList(sampleIndex + 1), AudioPlayMode.Background)
-        'MsgBox(strAudioPathList(sampleIndex + 1), vbOKOnly, "current audio file by index")
     End Sub
 
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
@@ -395,6 +392,8 @@ Public Class frmMatchUp
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
+        ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
             strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
         End If
         lblTotalCorrect.Text = strTotalCorrectMessage
