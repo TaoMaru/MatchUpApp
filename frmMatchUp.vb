@@ -31,7 +31,7 @@ Public Class frmMatchUp
     Private intTotalCorrect As Integer = 0 'the total number correct matches
     Private intCurrWordIndex As Integer = 0 'the index of the current target word
     Private strAudioList(9) As String ' holds target word audio
-
+    Private strAudioPathList(9) As String 'holds target word audio paths
     'sample words & file I/O:
     Private Sub GetWords()
         'get the list of target words & populate _strWordList with contents
@@ -58,6 +58,7 @@ Public Class frmMatchUp
     Private Sub GetAudio()
         'get the audio files for the target words
         ReDim strAudioList(1)
+        ReDim strAudioPathList(1)
         Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Try
             Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
@@ -66,11 +67,14 @@ Public Class frmMatchUp
             'grab filenames from audio directory:
             For Each audFile In dir.GetFiles()
                 strAudioList(strAudioList.Length - 1) = audFile.Name
-                'MsgBox(audFile.Name, vbOKOnly)
+                MsgBox(audFile.Name, vbOKOnly)
+                strAudioPathList(strAudioPathList.Length - 1) = audFilePath + "\" + audFile.Name
+                MsgBox(strAudioPathList(strAudioList.Length - 1), vbOKOnly)
                 ReDim Preserve strAudioList(strAudioList.Length)
+                ReDim Preserve strAudioPathList(strAudioPathList.Length)
             Next
         Catch ex As Exception
-            MsgBox("We had trouble accessing the audio directoty. Please try again.", vbOKOnly, "Audio Path Error")
+            MsgBox("We had trouble accessing the audio directory. Please try again.", vbOKOnly, "Audio Path Error")
             Reset()
             ResetForm()
         End Try
@@ -257,7 +261,8 @@ Public Class frmMatchUp
 
     Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
         'plays the audio for current task's sample word
-        My.Computer.Audio.Play(strAudioList(sampleIndex), AudioPlayMode.Background)
+        My.Computer.Audio.Play(strAudioPathList(sampleIndex), AudioPlayMode.Background)
+        'MsgBox(strAudioList(sampleIndex), vbOKOnly, "current audio file by index")
     End Sub
 
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
@@ -441,6 +446,7 @@ Public Class frmMatchUp
         'runs through the first 5 words in the word list with audio
         strShortList = GetShortList()
         GetShortIconList()
+        NextShortAudioTask(intCurrWordIndex)
     End Sub
 
     Private Sub PlayLongTask(ByRef intCurrWordIndex As Integer)
@@ -545,6 +551,13 @@ Public Class frmMatchUp
             'Playing printed mode long task
             If intCurrWordIndex < _strIconsList.Length() Then
                 NextLongTask(intCurrWordIndex)
+            Else
+                EndSeries()
+            End If
+        ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
+            'Playing spoken mode short task
+            If intCurrWordIndex < _strShortIconList.Length() Then
+                NextShortAudioTask(intCurrWordIndex)
             Else
                 EndSeries()
             End If
