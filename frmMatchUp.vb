@@ -38,7 +38,9 @@ Public Class frmMatchUp
         Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
         Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
         'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
+
         Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
+        MsgBox(filePath, vbOKOnly, "words file path")
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 

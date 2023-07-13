@@ -272,6 +272,25 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to BIKE
+        '''BOOK
+        '''CAR
+        '''CAT
+        '''CLOCK
+        '''DOG
+        '''FISH
+        '''HOUSE
+        '''PHONE
+        '''TREE
+        '''.
+        '''</summary>
+        Friend ReadOnly Property targetWords() As String
+            Get
+                Return ResourceManager.GetString("targetWords", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         '''</summary>
         Friend ReadOnly Property Tree() As System.IO.UnmanagedMemoryStream
