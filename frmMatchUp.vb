@@ -18,7 +18,7 @@ Public Class frmMatchUp
         MaximizeBox = False
         MinimizeBox = False
         ResetForm()
-        GetWords()
+        PutWordsToArray(_strWordList)
         GetAudio()
         CreateIconsList()
     End Sub
@@ -32,6 +32,7 @@ Public Class frmMatchUp
     Private intCurrWordIndex As Integer = 0 'the index of the current target word
     Private strAudioList(9) As String ' holds target word audio
     Private strAudioPathList(9) As String 'holds target word audio paths
+    Private _strWordListFromResource(9) As String 'holds target words from the resource txt file
     'sample words & file I/O:
     Private Sub GetWords()
         'get the list of target words & populate _strWordList with contents
@@ -41,6 +42,7 @@ Public Class frmMatchUp
 
         Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
         'MsgBox(filePath, vbOKOnly, "words file path")
+
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 
@@ -55,6 +57,22 @@ Public Class frmMatchUp
             Reset()
             ResetForm()
         End Try
+    End Sub
+
+    Private Sub PutWordsToArray(ByRef wordListArray() As String)
+        Dim txtFile As String = My.Resources.targetWords
+
+        wordListArray = txtFile.Split()
+
+        Dim lastNonEmpty As Integer = -1
+        For i As Integer = 0 To wordListArray.Length - 1
+            If wordListArray(i) <> "" Then
+                lastNonEmpty += 1
+                wordListArray(lastNonEmpty) = wordListArray(i)
+            End If
+        Next
+        ReDim Preserve wordListArray(lastNonEmpty)
+
     End Sub
 
     Private Sub GetAudio()
