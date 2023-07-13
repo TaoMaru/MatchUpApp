@@ -40,7 +40,7 @@ Public Class frmMatchUp
         'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
 
         Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
-        MsgBox(filePath, vbOKOnly, "words file path")
+        'MsgBox(filePath, vbOKOnly, "words file path")
         Dim textReader As IO.StreamReader
         Dim intIndex As Integer = 0
 

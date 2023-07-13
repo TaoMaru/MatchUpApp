@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -183,67 +183,109 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Bike.wav" />
+    <None Include="sampleWAVs\Bike.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Book.wav" />
+    <None Include="sampleWAVs\Book.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Car.wav" />
+    <None Include="sampleWAVs\Car.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Cat.wav" />
+    <None Include="sampleWAVs\Cat.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Clock.wav" />
+    <None Include="sampleWAVs\Clock.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Dog.wav" />
+    <None Include="sampleWAVs\Dog.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Fish.wav" />
+    <None Include="sampleWAVs\Fish.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\House.wav" />
+    <None Include="sampleWAVs\House.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Phone.wav" />
+    <None Include="sampleWAVs\Phone.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sampleWAVs\Tree.wav" />
+    <None Include="sampleWAVs\Tree.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\bike.png" />
+    <None Include="smallSamplePNGs\bike.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\book.png" />
+    <None Include="smallSamplePNGs\book.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\car.png" />
+    <None Include="smallSamplePNGs\car.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\cat.png" />
+    <None Include="smallSamplePNGs\cat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\clock.png" />
+    <None Include="smallSamplePNGs\clock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\dog.png" />
+    <None Include="smallSamplePNGs\dog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\fish.png" />
+    <None Include="smallSamplePNGs\fish.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\house.png" />
+    <None Include="smallSamplePNGs\house.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\phone.png" />
+    <None Include="smallSamplePNGs\phone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="smallSamplePNGs\tree.png" />
+    <None Include="smallSamplePNGs\tree.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="targetWords.txt" />
+    <None Include="targetWords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
