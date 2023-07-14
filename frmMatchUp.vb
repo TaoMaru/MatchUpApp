@@ -20,7 +20,7 @@ Public Class frmMatchUp
         ResetForm()
         PutWordsToArray(_strWordList)
         GetAudio()
-        CreateIconsList()
+        CreateIconImageList()
     End Sub
 
     'program variables:
@@ -284,7 +284,8 @@ Public Class frmMatchUp
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a short (5 item) task
         Try
-            Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
+            'Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
+            Dim currSampleImage As Image = _imgIconsList(intCurrSample)
             Dim intI As Integer = intCurrSample
             'picOption1.BackgroundImage = currSampleImage
             Dim picBox1 = New TaskItem()
@@ -299,11 +300,14 @@ Public Class frmMatchUp
             _tskAllTaskItems(3) = picBox4
             'set task item images
             picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
-            currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
+            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
+            currSampleImage = _imgIconsList((intI + 1) Mod _imgIconsList.Length())
             picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
-            currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
+            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
+            currSampleImage = _imgIconsList((intI + 2) Mod _imgIconsList.Length())
             picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
-            currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
+            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
+            currSampleImage = _imgIconsList((intI + 3) Mod _imgIconsList.Length())
             picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
@@ -323,7 +327,8 @@ Public Class frmMatchUp
     Private Sub LongCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a long (10 item) task
         Try
-            Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+            'Dim currSampleImage As Image = Image.FromFile(_strIconsList(intCurrSample))
+            Dim currSampleImage As Image = _imgIconsList(intCurrSample)
             Dim intI As Integer = intCurrSample
             'picOption1.BackgroundImage = currSampleImage
             Dim picBox1 = New TaskItem()
@@ -338,11 +343,14 @@ Public Class frmMatchUp
             _tskAllTaskItems(3) = picBox4
             'set task item images
             picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
-            currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+            'currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+            currSampleImage = _imgIconsList((intI + 1) Mod _imgIconsList.Length())
             picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
-            currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+            'currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+            currSampleImage = _imgIconsList((intI + 2) Mod _imgIconsList.Length())
             picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
-            currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+            'currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+            currSampleImage = _imgIconsList((intI + 3) Mod _imgIconsList.Length())
             picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
