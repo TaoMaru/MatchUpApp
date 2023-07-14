@@ -10,6 +10,7 @@
 ''          There are two task sizes: short version consists of 5 words. Long version consists of 10 words.
 ''          At the end of the series, the total number of correct words is presented.
 ''Update: July 6, 2013 - Spoken Word Mode
+''Update: July 14, 2013 - App no longer uses external files to build word, audio, or icons lists
 ''          
 Public Class frmMatchUp
     Private Sub frmMatchUp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -19,7 +20,6 @@ Public Class frmMatchUp
         MinimizeBox = False
         ResetForm()
         PutWordsToArray(_strWordList)
-        'GetAudio()
         PutAudioToArray()
         CreateIconImageList()
     End Sub
@@ -28,38 +28,10 @@ Public Class frmMatchUp
     Private _strWordList(9) As String 'holds target words 
     Private intCurrWordSampleIndex As Integer 'the index of current word displayed
     Private _tskAllTaskItems As TaskItem() ' holds task items for short or long tasks
-    Private _strShortIconList As String() 'holds icon paths as string in short match task
     Private intTotalCorrect As Integer = 0 'the total number correct matches
     Private intCurrWordIndex As Integer = 0 'the index of the current target word
-    Private strAudioList(9) As String ' holds target word audio
-    Private strAudioPathList(9) As String 'holds target word audio paths
-    Private _strWordListFromResource(9) As String 'holds target words from the resource txt file
-    'sample words & file I/O:
-    Private Sub GetWords()
-        'get the list of target words & populate _strWordList with contents
-        Dim trimChars() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
-        Dim currDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(trimChars))
-        'Without Trim, currDir includes <MatchUpApp\bin\Debug> - with Trim, removes <bin\Debug>
 
-        Dim filePath As String = IO.Path.Combine(currDir, "targetWords.txt") 'read file
-        'MsgBox(filePath, vbOKOnly, "words file path")
-
-        Dim textReader As IO.StreamReader
-        Dim intIndex As Integer = 0
-
-        Try
-            textReader = IO.File.OpenText(filePath)
-            Do While textReader.Peek <> -1
-                _strWordList(intIndex) = textReader.ReadLine()
-                intIndex += 1
-            Loop
-        Catch ex As Exception
-            MsgBox("We had trouble reading the file. Please try again.", vbOKOnly, "File Read Error")
-            Reset()
-            ResetForm()
-        End Try
-    End Sub
-
+    'Building word and audio lists:
     Private Sub PutWordsToArray(ByRef wordListArray() As String)
         Dim txtFile As String = My.Resources.targetWords
 
@@ -76,81 +48,15 @@ Public Class frmMatchUp
 
     End Sub
 
-    Private Sub GetAudio()
-        'get the audio files for the target words
-        ReDim strAudioList(1)
-        ReDim strAudioPathList(1)
-        Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
-        Try
-            Dim currDirectory As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-            Dim audFilePath As String = currDirectory + "\sampleWAVs"
-            Dim dir As IO.DirectoryInfo = New IO.DirectoryInfo(audFilePath)
-            'grab filenames from audio directory:
-            For Each audFile In dir.GetFiles()
-                strAudioList(strAudioList.Length - 1) = audFile.Name
-                strAudioPathList(strAudioPathList.Length - 1) = audFilePath + "\" + audFile.Name
-                ReDim Preserve strAudioList(strAudioList.Length)
-                ReDim Preserve strAudioPathList(strAudioPathList.Length)
-            Next
-        Catch ex As Exception
-            MsgBox("We had trouble accessing the audio directory. Please try again.", vbOKOnly, "Audio Path Error")
-            Reset()
-            ResetForm()
-        End Try
-
-    End Sub
-
     Private audioFiles(9) As IO.UnmanagedMemoryStream
 
     Private Sub PutAudioToArray()
         audioFiles = {Nothing, My.Resources.Bike, My.Resources.Book, My.Resources.Car,
             My.Resources.Cat, My.Resources.Clock, My.Resources.Dog, My.Resources.Fish,
             My.Resources.House, My.Resources.Phone, My.Resources.Tree}
-        'audioFiles(0) = My.Resources.ResourceManager.GetStream("Bike")
-        'audioFiles(1) = My.Resources.ResourceManager.GetStream("Book")
-        'audioFiles(2) = My.Resources.ResourceManager.GetStream("Car")
-        'audioFiles(3) = My.Resources.ResourceManager.GetStream("Cat")
-        'audioFiles(4) = My.Resources.ResourceManager.GetStream("Clock")
-        'audioFiles(5) = My.Resources.ResourceManager.GetStream("Dog")
-        'audioFiles(6) = My.Resources.ResourceManager.GetStream("Fish")
-        'audioFiles(7) = My.Resources.ResourceManager.GetStream("House")
-        'audioFiles(8) = My.Resources.ResourceManager.GetStream("Phone")
-        'audioFiles(9) = My.Resources.ResourceManager.GetStream("Tree")
-
     End Sub
 
     'picture/icons:
-    Private _strIconsList(9) As String 'Holds icons
-    Private Sub CreateIconsList()
-        'populates icon file path lists by getting the current directory and combining file names
-        Try
-            Dim charsToTrim() As Char = {"\", "D", "e", "b", "u", "g"} 'used to remove excess from file path
-            Dim iconDir As String = IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory.Trim(charsToTrim))
-            _strIconsList(0) = IO.Path.Combine(iconDir, "smallSamplePNGs\bike.png")
-            _strIconsList(1) = IO.Path.Combine(iconDir, "smallSamplePNGs\book.png")
-            _strIconsList(2) = IO.Path.Combine(iconDir, "smallSamplePNGs\car.png")
-            _strIconsList(3) = IO.Path.Combine(iconDir, "smallSamplePNGs\cat.png")
-            _strIconsList(4) = IO.Path.Combine(iconDir, "smallSamplePNGs\clock.png")
-            _strIconsList(5) = IO.Path.Combine(iconDir, "smallSamplePNGs\dog.png")
-            _strIconsList(6) = IO.Path.Combine(iconDir, "smallSamplePNGs\fish.png")
-            _strIconsList(7) = IO.Path.Combine(iconDir, "smallSamplePNGs\house.png")
-            _strIconsList(8) = IO.Path.Combine(iconDir, "smallSamplePNGs\phone.png")
-            _strIconsList(9) = IO.Path.Combine(iconDir, "smallSamplePNGs\tree.png")
-        Catch pathTooLong As IO.PathTooLongException
-            MsgBox("The icon png file paths are too long. Check the file directory and try again.",
-                                                vbOKOnly, "Icon PNG File Path Too Long!")
-            ResetForm()
-        Catch argEx As ArgumentException
-            MsgBox("An error occurred while trying to find the icon png directory. Please try again.",
-                                                vbOKOnly, "Error Retrieving Icon PNG Directory!")
-            ResetForm()
-        Catch ex As Exception
-            MsgBox("An error occurred while loading the sample icon pngs. Please try again.",
-                                                vbOKOnly, "Error Loading Sample Icons!")
-            ResetForm()
-        End Try
-    End Sub
-
     Private _imgIconsList(9) As Image 'holds icons as images
 
     Private Sub CreateIconImageList()
@@ -298,7 +204,6 @@ Public Class frmMatchUp
 
     Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
         'plays the audio for current task's sample word
-        'My.Computer.Audio.Play(strAudioPathList(sampleIndex + 1), AudioPlayMode.Background)
         audioFiles(sampleIndex + 1).Position = 0
         My.Computer.Audio.Play(audioFiles(sampleIndex + 1), AudioPlayMode.Background)
     End Sub
@@ -306,8 +211,7 @@ Public Class frmMatchUp
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
         ' populates the picture boxes with icons for a short (5 item) task
         Try
-            'Dim currSampleImage As Image = Image.FromFile(_strShortIconList(intCurrSample))
-            Dim currSampleImage As Image = _imgIconsList(intCurrSample)
+            Dim currSampleImage As Image = _imgShortIconsList(intCurrSample)
             Dim intI As Integer = intCurrSample
             'picOption1.BackgroundImage = currSampleImage
             Dim picBox1 = New TaskItem()
@@ -321,16 +225,17 @@ Public Class frmMatchUp
             _tskAllTaskItems(2) = picBox3
             _tskAllTaskItems(3) = picBox4
             'set task item images
-            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strShortIconList.Length()))
-            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 1) Mod _strShortIconList.Length())))
-            currSampleImage = _imgIconsList((intI + 1) Mod _imgIconsList.Length())
-            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strShortIconList.Length()))
-            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 2) Mod _strShortIconList.Length())))
-            currSampleImage = _imgIconsList((intI + 2) Mod _imgIconsList.Length())
-            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strShortIconList.Length()))
-            'currSampleImage = Image.FromFile(_strShortIconList(((intI + 3) Mod _strShortIconList.Length())))
-            currSampleImage = _imgIconsList((intI + 3) Mod _imgIconsList.Length())
-            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strShortIconList.Length()))
+            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _imgShortIconsList.Length()))
+
+            currSampleImage = _imgShortIconsList((intI + 1) Mod _imgShortIconsList.Length())
+            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _imgShortIconsList.Length()))
+
+            currSampleImage = _imgShortIconsList((intI + 2) Mod _imgShortIconsList.Length())
+            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _imgShortIconsList.Length()))
+
+            currSampleImage = _imgShortIconsList((intI + 3) Mod _imgShortIconsList.Length())
+            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _imgShortIconsList.Length()))
+
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
             ResetForm()
@@ -364,16 +269,17 @@ Public Class frmMatchUp
             _tskAllTaskItems(2) = picBox3
             _tskAllTaskItems(3) = picBox4
             'set task item images
-            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _strIconsList.Length()))
-            'currSampleImage = Image.FromFile(_strIconsList(((intI + 1) Mod _strIconsList.Length())))
+            picBox4.UpdateTaskItem(currSampleImage, (intI Mod _imgIconsList.Length()))
+
             currSampleImage = _imgIconsList((intI + 1) Mod _imgIconsList.Length())
-            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _strIconsList.Length()))
-            'currSampleImage = Image.FromFile(_strIconsList(((intI + 2) Mod _strIconsList.Length())))
+            picBox2.UpdateTaskItem(currSampleImage, ((intI + 1) Mod _imgIconsList.Length()))
+
             currSampleImage = _imgIconsList((intI + 2) Mod _imgIconsList.Length())
-            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _strIconsList.Length()))
-            'currSampleImage = Image.FromFile(_strIconsList(((intI + 3) Mod _strIconsList.Length())))
+            picBox3.UpdateTaskItem(currSampleImage, ((intI + 2) Mod _imgIconsList.Length()))
+
             currSampleImage = _imgIconsList((intI + 3) Mod _imgIconsList.Length())
-            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _strIconsList.Length()))
+            picBox1.UpdateTaskItem(currSampleImage, ((intI + 3) Mod _imgIconsList.Length()))
+
         Catch fileNotFound As IO.FileNotFoundException
             MsgBox("The icon file could not be located. Please try again.", vbOKOnly, "Icon File Not Found!")
             ResetForm()
@@ -458,13 +364,13 @@ Public Class frmMatchUp
         ' edits the end screen message to include the total num correct selctions out of the series total
         Dim strTotalCorrectMessage = "Nice! {0}/{1}"
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _imgShortIconsList.Length())
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _imgIconsList.Length())
         ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strShortIconList.Length())
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _imgShortIconsList.Length())
         ElseIf cboMode.SelectedIndex = 1 And rdoLong.Checked = True Then
-            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _strIconsList.Length())
+            strTotalCorrectMessage = String.Format(strTotalCorrectMessage, intTotalCorrect, _imgIconsList.Length())
         End If
         lblTotalCorrect.Text = strTotalCorrectMessage
     End Sub
@@ -566,12 +472,14 @@ Public Class frmMatchUp
         Return strShortWordList
     End Function
 
+    Dim _imgShortIconsList() As Image
+
     Private Sub GetShortIconList()
         'creates a short icon list from original icons list
         Dim intIndex As Integer
-        ReDim _strShortIconList(4)
-        For intIndex = 0 To _strShortIconList.Length() - 1
-            _strShortIconList(intIndex) = _strIconsList(intIndex)
+        ReDim _imgShortIconsList(4)
+        For intIndex = 0 To _imgShortIconsList.Length() - 1
+            _imgShortIconsList(intIndex) = _imgIconsList(intIndex)
         Next
     End Sub
 
@@ -608,28 +516,28 @@ Public Class frmMatchUp
         HideCheck()
         If cboMode.SelectedIndex = 0 And rdoShort.Checked = True Then
             'Playing printed mode short task
-            If intCurrWordIndex < _strShortIconList.Length() Then
+            If intCurrWordIndex < _imgShortIconsList.Length() Then
                 NextShortTask(intCurrWordIndex)
             Else
                 EndSeries()
             End If
         ElseIf cboMode.SelectedIndex = 0 And rdoLong.Checked = True Then
             'Playing printed mode long task
-            If intCurrWordIndex < _strIconsList.Length() Then
+            If intCurrWordIndex < _imgIconsList.Length() Then
                 NextLongTask(intCurrWordIndex)
             Else
                 EndSeries()
             End If
         ElseIf cboMode.SelectedIndex = 1 And rdoShort.Checked = True Then
             'Playing spoken mode short task
-            If intCurrWordIndex < _strShortIconList.Length() Then
+            If intCurrWordIndex < _imgShortIconsList.Length() Then
                 NextShortAudioTask(intCurrWordIndex)
             Else
                 EndSeries()
             End If
         ElseIf cboMode.SelectedIndex = 1 And rdoLong.Checked = True Then
             'Playing spoken mode long task
-            If intCurrWordIndex < _strIconsList.Length() Then
+            If intCurrWordIndex < _imgIconsList.Length() Then
                 NextLongAudioTask(intCurrWordIndex)
             Else
                 EndSeries()
