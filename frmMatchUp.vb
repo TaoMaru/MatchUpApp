@@ -131,6 +131,25 @@ Public Class frmMatchUp
         End Try
     End Sub
 
+    Private _imgIconsList(9) As Image 'holds icons as images
+
+    Private Sub CreateIconImageList()
+        'populates imgIconsList with images from sample png resource folder
+        'Dim bikeImage As Image = My.Resources.bike1
+        _imgIconsList(0) = My.Resources.bike1
+        _imgIconsList(1) = My.Resources.book1
+        _imgIconsList(2) = My.Resources.car1
+        _imgIconsList(3) = My.Resources.cat1
+        _imgIconsList(4) = My.Resources.clock1
+        _imgIconsList(5) = My.Resources.dog1
+        _imgIconsList(6) = My.Resources.fish1
+        _imgIconsList(7) = My.Resources.house1
+        _imgIconsList(8) = My.Resources.phone1
+        _imgIconsList(9) = My.Resources.tree1
+
+
+    End Sub
+
     'check mark location settings:
     Private picOp1Location = New Point(60, 300) ' position at picOption 1
     Private picOp2Location = New Point(260, 300) ' position at picOption 2
