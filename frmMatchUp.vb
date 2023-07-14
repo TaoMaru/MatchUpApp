@@ -19,7 +19,8 @@ Public Class frmMatchUp
         MinimizeBox = False
         ResetForm()
         PutWordsToArray(_strWordList)
-        GetAudio()
+        'GetAudio()
+        PutAudioToArray()
         CreateIconImageList()
     End Sub
 
@@ -96,6 +97,25 @@ Public Class frmMatchUp
             Reset()
             ResetForm()
         End Try
+
+    End Sub
+
+    Private audioFiles(9) As IO.UnmanagedMemoryStream
+
+    Private Sub PutAudioToArray()
+        audioFiles = {Nothing, My.Resources.Bike, My.Resources.Book, My.Resources.Car,
+            My.Resources.Cat, My.Resources.Clock, My.Resources.Dog, My.Resources.Fish,
+            My.Resources.House, My.Resources.Phone, My.Resources.Tree}
+        'audioFiles(0) = My.Resources.ResourceManager.GetStream("Bike")
+        'audioFiles(1) = My.Resources.ResourceManager.GetStream("Book")
+        'audioFiles(2) = My.Resources.ResourceManager.GetStream("Car")
+        'audioFiles(3) = My.Resources.ResourceManager.GetStream("Cat")
+        'audioFiles(4) = My.Resources.ResourceManager.GetStream("Clock")
+        'audioFiles(5) = My.Resources.ResourceManager.GetStream("Dog")
+        'audioFiles(6) = My.Resources.ResourceManager.GetStream("Fish")
+        'audioFiles(7) = My.Resources.ResourceManager.GetStream("House")
+        'audioFiles(8) = My.Resources.ResourceManager.GetStream("Phone")
+        'audioFiles(9) = My.Resources.ResourceManager.GetStream("Tree")
 
     End Sub
 
@@ -278,7 +298,9 @@ Public Class frmMatchUp
 
     Private Sub PlaySampleAudio(ByVal sampleIndex As Integer)
         'plays the audio for current task's sample word
-        My.Computer.Audio.Play(strAudioPathList(sampleIndex + 1), AudioPlayMode.Background)
+        'My.Computer.Audio.Play(strAudioPathList(sampleIndex + 1), AudioPlayMode.Background)
+        audioFiles(sampleIndex + 1).Position = 0
+        My.Computer.Audio.Play(audioFiles(sampleIndex + 1), AudioPlayMode.Background)
     End Sub
 
     Private Sub ShortCreateTaskItems(ByVal intCurrSample As Integer)
